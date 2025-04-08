@@ -1,0 +1,13 @@
+{
+    "splashcentertext":"دون ملاحظاتك",
+    
+    "hometitel":"my notes",
+    "searchhint":"search within my notes🔦",
+    "alertdescription":"confirm the deletion process?",
+    "alertaction1":"cancel",
+    "alertaction2":"delete",
+
+    "addpagetitle":"add note",
+    "titlefieldhint":"the title",
+    "bodyfieldhint":"write..."
+}
