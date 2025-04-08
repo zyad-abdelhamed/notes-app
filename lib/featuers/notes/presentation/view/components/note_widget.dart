@@ -10,9 +10,9 @@ class NoteWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.0),
+      padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50), color: AppColors.grey),
+          borderRadius: BorderRadius.circular(20), color: AppColors.blueGrey),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -24,7 +24,7 @@ class NoteWidget extends StatelessWidget {
             descreption,
             maxLines: 10,
             overflow: TextOverflow.ellipsis,
-            style: TextStyles.semiBold16(context: context),
+            style: TextStyles.regular14_150(context),
           ),
         ],
       ),

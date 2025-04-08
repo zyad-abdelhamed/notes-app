@@ -4,11 +4,16 @@ import 'package:notes_app/core/theme/app_colors.dart';
 ThemeData get getlighttheme {
   return ThemeData(
       brightness: Brightness.light,
-      appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.lightModePrimaryColor,
-          elevation: 0.0,
-          centerTitle: true),
+      appBarTheme: AppBarTheme(
+        backgroundColor: Colors.transparent,
+        titleTextStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
+            color: AppColors.lightModePrimaryColor),
+        elevation: 0.0,
+      ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          splashColor: AppColors.grey,
           backgroundColor: AppColors.lightModePrimaryColor,
           shape: CircleBorder(),
           iconSize: 40),
