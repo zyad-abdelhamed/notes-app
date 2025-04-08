@@ -22,7 +22,7 @@ class NoteWidget extends StatelessWidget {
           ),
           Text(
             descreption,
-            maxLines: 10,
+            maxLines: 15,
             overflow: TextOverflow.ellipsis,
             style: TextStyles.regular14_150(context),
           ),

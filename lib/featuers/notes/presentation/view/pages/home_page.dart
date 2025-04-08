@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:notes_app/core/extentions/controllers_extention.dart';
 import 'package:notes_app/core/extentions/localization_extention.dart';
+import 'package:notes_app/core/theme/theme_provider.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/note_widget.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -12,6 +16,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(//"hometitel".localization
             'my notes'),
+        actions: _appBarActions(context),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -31,6 +36,22 @@ class HomePage extends StatelessWidget {
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  List<Widget> _appBarActions(BuildContext context) {
+    final IconData themeIcon =
+        context.themeController.darkMode ? Icons.light_mode : Icons.dark_mode;
+
+    return [
+      IconButton(onPressed: () {}, icon: Icon(Icons.favorite)),
+      IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+      IconButton(
+          onPressed: () {
+            Provider.of<ThemeProvider>(context, listen: false).changeTheme();
+          },
+          icon: Icon(themeIcon)),
+      IconButton(onPressed: () {}, icon: Icon(Icons.language))
+    ];
   }
 }
 
