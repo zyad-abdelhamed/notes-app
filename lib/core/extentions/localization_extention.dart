@@ -1,4 +1,4 @@
-  import 'package:notes_app/core/localization/languages/localization_proxy.dart';
+  import 'package:notes_app/core/localization/localization_proxy.dart';
 
 BaseLocalization baseLocalization =LocalizationImpl();
 

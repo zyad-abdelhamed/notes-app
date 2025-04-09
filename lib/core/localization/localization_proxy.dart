@@ -22,7 +22,7 @@ class LocalizationImpl extends BaseLocalization {
     // await baseCache.insertStringToCache(
     //     key: CacheConstants.languageKey, value: language);
     String root = await rootBundle
-        .loadString("lib/core/localization/languages/ar.json");
+        .loadString('lib/core/localization/languages/en.json');
     localization = json.decode(root);
   }
 

@@ -14,8 +14,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(//"hometitel".localization
-            'my notes'),
+        title: Text('my notes'
+            ),
         actions: _appBarActions(context),
       ),
       body: Padding(
