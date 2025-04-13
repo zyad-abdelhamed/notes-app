@@ -6,11 +6,16 @@ ThemeData get getlighttheme {
     brightness: Brightness.light,
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,
-      titleTextStyle: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 30,
-          color: AppColors.lightModePrimaryColor),
       elevation: 0.0,
+    ),tabBarTheme: TabBarThemeData(
+       tabAlignment: TabAlignment.center,
+            indicatorColor: AppColors.lightModePrimaryColor,labelStyle: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+          color: AppColors.lightModePrimaryColor)
+    ),
+    iconTheme: IconThemeData(
+      color: AppColors.lightModePrimaryColor
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
         splashColor: AppColors.grey,
