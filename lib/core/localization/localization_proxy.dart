@@ -1,65 +1,61 @@
-import 'dart:convert';
-import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
-abstract class BaseLocalization {
-  String language = 'en';
-  TextDirection getDirectionality();
-  Map<String, dynamic> localization = {};
-  Future<void> loadlang();
-  Future<void> convertToArabic();
-  Future<void> convertToEnglish();
-  bool isarabic();
-  Future<void> getLanguage();
- // String getCurrentLanguage();
+class LocalizationController extends GetxController {
+  Locale currentLanguage = Get.deviceLocale!;
+  changeLanguage({required Languages language}) {
+    switch (language) {
+      case Languages.deviceLanguage:
+        currentLanguage = Get.deviceLocale!;
+      case Languages.arabic:
+        currentLanguage = Locale('ar');
+           update(); 
+      case Languages.english:
+        currentLanguage = Locale('en');
+    }
+  }
 }
 
-class LocalizationImpl extends BaseLocalization {
- // final BaseCache baseCache;
+enum Languages { deviceLanguage, arabic, english }
 
- // LocalizationImpl(this.baseCache);
+class Localization implements Translations {
   @override
-  Future<void> loadlang() async {
-    // await baseCache.insertStringToCache(
-    //     key: CacheConstants.languageKey, value: language);
-    String root = await rootBundle
-        .loadString('lib/core/localization/languages/en.json');
-    localization = json.decode(root);
-  }
-
-  @override
-  Future<void> convertToArabic() async {
-    language = 'ar';
-    getDirectionality();
-    await loadlang();
-  }
-
-  @override
-  Future<void> convertToEnglish() async {
-    language = 'en';
-    getDirectionality();
-    await loadlang();
-  }
-
-  @override
-  bool isarabic() {
-    return language == 'ar';
-  }
-
-  @override
-  Future<void> getLanguage() async {
-    // language =
-    //     baseCache.getStringFromCache(key: CacheConstants.languageKey) ?? "en";
-    await loadlang();
-  }
-
-  // @override
-  // String getCurrentLanguage() {
-  //   // return baseCache.getStringFromCache(key: CacheConstants.languageKey) ??
-  //   //     "ar";
-  // }
-
-  @override
-  TextDirection getDirectionality() {
-    return isarabic() ? TextDirection.rtl : TextDirection.ltr;
-  }
+  Map<String, Map<String, String>> get keys => {
+        "ar": {
+          "splashcentertext": "دون ملاحظاتك",
+          "hometitel": "ملاحظاتي",
+          "DeviceLanguage":"لغه الجهاز",
+          "AllFolders": "جميع\n  المجلدات",
+          "AddNote": "إضافة\n  ملاحظه",
+          "Title": "العنوان",
+          "Write": "دون...",
+          "FeaturedNotes": "الملاحظات\n  المميزه",
+          "CreateNewFolder": "انشاء مجلد جديد",
+          "searchhint": "search within my notes🔦",
+          "alertdescription": "confirm the deletion process?",
+          "alertaction1": "cancel",
+          "alertaction2": "delete",
+          "addpagetitle": "add note",
+          "titlefieldhint": "the title",
+          "bodyfieldhint": "write..."
+        },
+        "en": {
+          "splashcentertext": "take notes",
+          "hometitel": "My\n  Notes",
+          "DeviceLanguage": "device language",
+          "AllFolders": "All\n  folders",
+          "AddNote": "Add\n  Note",
+          "Title": "Title",
+          "Write": "write...",
+          "FeaturedNotes": "Featured\n  Notes",
+          "CreateNewFolder": "create new folder",
+          "searchhint": "search within my notes🔦",
+          "alertdescription": "confirm the deletion process?",
+          "alertaction1": "cancel",
+          "alertaction2": "delete",
+          "addpagetitle": "add note",
+          "titlefieldhint": "the title",
+          "bodyfieldhint": "write..."
+        }
+      };
 }
