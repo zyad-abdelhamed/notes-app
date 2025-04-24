@@ -18,8 +18,26 @@ class NoteRepo implements BaseNoteRepo{
   }
 
   @override
-  Future<Either<Failure, List<Note>>> getNotes() {
-    // TODO: implement getNotes
+  Future<Either<Failure, List<Note>>> getAllNotes() {
+    // TODO: implement getAllNotes
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<Note>>> getFavoriteNotes() {
+    // TODO: implement getFavoriteNotes
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<Note>>> getNotesByCategory() {
+    // TODO: implement getNotesByCategory
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, Unit>> toggleFavorite(NotePrameter notePrameter) {
+    // TODO: implement toggleFavorite
     throw UnimplementedError();
   }
 
@@ -28,5 +46,6 @@ class NoteRepo implements BaseNoteRepo{
     // TODO: implement updateNote
     throw UnimplementedError();
   }
+ 
 
 }
