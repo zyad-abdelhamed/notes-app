@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/core/extentions/controllers_extention.dart';
 import 'package:notes_app/core/localization/localization_proxy.dart';
-import 'package:notes_app/core/theme/light_theme_data.dart';
 import 'package:notes_app/core/theme/theme_provider.dart';
 import 'package:notes_app/featuers/notes/presentation/view/pages/home_page.dart';
 import 'package:provider/provider.dart';

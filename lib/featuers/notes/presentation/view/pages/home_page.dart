@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notes_app/core/extentions/controllers_extention.dart';
-import 'package:notes_app/core/extentions/localization_extention.dart';
 import 'package:notes_app/core/theme/theme_provider.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/note_widget.dart';
 import 'package:provider/provider.dart';
