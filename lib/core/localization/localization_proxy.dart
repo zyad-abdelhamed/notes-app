@@ -22,6 +22,7 @@ class Localization implements Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         "ar": {
+          "search":"بحث",
           "splashcentertext": "دون ملاحظاتك",
           "hometitel": "ملاحظاتي",
           "DeviceLanguage":"لغه الجهاز",
@@ -40,6 +41,7 @@ class Localization implements Translations {
           "bodyfieldhint": "write..."
         },
         "en": {
+          "search":"search",
           "splashcentertext": "take notes",
           "hometitel": "My\n  Notes",
           "DeviceLanguage": "device language",

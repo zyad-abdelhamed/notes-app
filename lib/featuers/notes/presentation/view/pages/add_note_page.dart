@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:notes_app/featuers/notes/presentation/controller/cubit/add_cubit.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/add_note_form.dart';
 
 class AddNotePage extends StatelessWidget {
@@ -9,9 +7,8 @@ class AddNotePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => NoteCubit(),
-      child: Scaffold(
+    return 
+       Scaffold(
         appBar: AppBar(
           title: Text(
             "AddNote".tr,
@@ -25,7 +22,7 @@ class AddNotePage extends StatelessWidget {
           ],
         ),
         body: AddNoteForm(),
-      ),
-    );
+      );
+    
   }
 }

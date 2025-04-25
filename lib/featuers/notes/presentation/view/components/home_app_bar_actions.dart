@@ -20,7 +20,9 @@ List<Widget> appBarActions(BuildContext context) {
             Get.toNamed(RoutesConstants.featuredNotesPageRouteName);
           },
           icon: Icon(Icons.star)),
-      IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+      IconButton(onPressed: () {
+        Get.toNamed(RoutesConstants.searchScreenPageRouteName);
+      }, icon: Icon(Icons.search)),
       IconButton(
           onPressed: () {
             if (Get.isDarkMode) {

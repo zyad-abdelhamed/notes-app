@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:notes_app/core/extentions/controllers_extention.dart';
 import 'package:notes_app/core/theme/text_styles.dart';
-import 'package:notes_app/featuers/notes/presentation/controller/cubit/add_cubit.dart';
+import 'package:notes_app/featuers/notes/presentation/controller/note_controller.dart';
 
 class AddNoteForm extends StatelessWidget {
   const AddNoteForm({
@@ -12,19 +10,18 @@ class AddNoteForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NoteCubit, NoteState>(
-      builder: (context, state) {
+    return GetBuilder<NoteController>(
+      builder: (controller) {
         return SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: Form(
-                key: context.noteController.addFormKey,
+                key: controller.addFormKey,
                 child: Column(
                   children: [
                     TextFormField(
                       style: TextStyles.bold23(context: context),
-                      controller:
-                          context.noteController.addTitelTextFieldController,
+                      controller: controller.addTitelTextFieldController,
                       maxLines: 2,
                       maxLength: 10,
                       decoration: InputDecoration(
@@ -34,8 +31,7 @@ class AddNoteForm extends StatelessWidget {
                     ),
                     TextFormField(
                       style: TextStyles.regular14_150(context),
-                      controller: context
-                          .noteController.addDescreptionTextFieldController,
+                      controller: controller.addDescreptionTextFieldController,
                       maxLines: 10000,
                       decoration: InputDecoration(
                           hintText: "Write".tr,
