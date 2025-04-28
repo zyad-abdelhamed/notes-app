@@ -37,7 +37,8 @@ class Localization implements Translations {
           "alertaction2": "delete",
           "addpagetitle": "add note",
           "titlefieldhint": "the title",
-          "bodyfieldhint": "write..."
+          "bodyfieldhint": "write...",
+          "localDataBaseErorr":""
         },
         "en": {
           "splashcentertext": "take notes",
@@ -55,7 +56,8 @@ class Localization implements Translations {
           "alertaction2": "delete",
           "addpagetitle": "add note",
           "titlefieldhint": "the title",
-          "bodyfieldhint": "write..."
+          "bodyfieldhint": "write...",
+          "localDataBaseErorr":""
         }
       };
 }

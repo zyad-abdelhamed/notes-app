@@ -12,6 +12,10 @@ class AddNoteForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const int descreptionMaxLines = 1000;
+    const int titleMaxLines = 2;
+    const int titleMaxLength = 10;
+
     return BlocBuilder<NoteCubit, NoteState>(
       builder: (context, state) {
         return SingleChildScrollView(
@@ -25,8 +29,8 @@ class AddNoteForm extends StatelessWidget {
                       style: TextStyles.bold23(context: context),
                       controller:
                           context.noteController.addTitelTextFieldController,
-                      maxLines: 2,
-                      maxLength: 10,
+                      maxLines: titleMaxLines,
+                      maxLength: titleMaxLength,
                       decoration: InputDecoration(
                           hintText: "Title".tr,
                           hintStyle: TextStyles.bold23(context: context),
@@ -36,7 +40,7 @@ class AddNoteForm extends StatelessWidget {
                       style: TextStyles.regular14_150(context),
                       controller: context
                           .noteController.addDescreptionTextFieldController,
-                      maxLines: 10000,
+                      maxLines: descreptionMaxLines,
                       decoration: InputDecoration(
                           hintText: "Write".tr,
                           hintStyle: TextStyles.regular14_150(context),

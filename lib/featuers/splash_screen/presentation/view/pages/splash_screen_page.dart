@@ -13,8 +13,9 @@ class SplashScreenPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SplashScreenCubit()..animateText(),
-      child: ColoredBox(
-          color:  Color(0xff100B20),
+      child: Scaffold(
+        backgroundColor: const Color(0xff100B20),
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -39,7 +40,8 @@ class SplashScreenPage extends StatelessWidget {
               )
             ],
           ),
-        )
+        ),
+      )
     );
   }
 }

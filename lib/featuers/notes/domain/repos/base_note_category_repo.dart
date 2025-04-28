@@ -1,7 +1,9 @@
+import 'package:dartz/dartz.dart';
+import 'package:notes_app/core/erorr/failure.dart';
+
 abstract class BaseNoteCategoryRepo {
-  // ===== CATEGORY CRUD =====
-  Future<int> insertCategory(String name);
-  Future<List<Map<String, dynamic>>> getAllCategories();
-  Future<int> updateCategory(int id, String name);
-  Future<int> deleteCategory(int id);
+  Future<Either<Failure, Unit>> insertCategory(String name);
+  Future<Either<Failure, List<String>>> getAllCategories();
+  Future<Either<Failure, Unit>> updateCategory(int id, String name);
+  Future<Either<Failure, Unit>> deleteCategory(int id);
 }

@@ -2,8 +2,9 @@ import 'package:notes_app/core/services/data_base_service.dart/base_data_base_se
 import 'package:notes_app/core/services/data_base_service.dart/sqflite_client.dart';
 import 'package:notes_app/featuers/notes/data/models/note_prameter.dart';
 
-class NotesDatabaseImplBysqflite implements BaseDataBaseService {
-  SqfliteClient  sqfliteClient = SqfliteClient();
+class NotesDatabaseImplBysqflite with BaseCrudDataBaseService, BaseCategoriesDataBaseService, BaseFavoriteDataBaseService {
+  NotesDatabaseImplBysqflite({required this.sqfliteClient});
+  SqfliteClient  sqfliteClient;
 
   // ===== CATEGORY CRUD =====
   @override
