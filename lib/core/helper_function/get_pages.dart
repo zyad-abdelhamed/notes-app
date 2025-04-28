@@ -6,18 +6,22 @@ import 'package:notes_app/featuers/notes/presentation/view/pages/add_note_page.d
 import 'package:notes_app/featuers/notes/presentation/view/pages/featured_notes_page.dart';
 import 'package:notes_app/featuers/notes/presentation/view/pages/folders_page.dart';
 import 'package:notes_app/featuers/notes/presentation/view/pages/home_page.dart';
+import 'package:notes_app/featuers/notes/presentation/view/pages/search_page.dart';
 import 'package:notes_app/featuers/splash_screen/presentation/view/pages/splash_screen_page.dart';
 
 List<GetPage<dynamic>>? get getPages => <GetPage<dynamic>>[
       GetPage(
-          name: RoutesConstants.splashScreenPageRouteName,
-          page: () => const SplashScreenPage(),
-          ),
+          name: RoutesConstants.searchScreenPageRouteName,
+          page: () => const SearchPage(),
+          transitionDuration: ViewConstants.longDuration),
+      GetPage(
+        name: RoutesConstants.splashScreenPageRouteName,
+        page: () => const SplashScreenPage(),
+      ),
       GetPage(
           name: RoutesConstants.homePageRouteName,
           page: () => const HomePage(),
-          transitionDuration: ViewConstants.longDuration
-          ),
+          transitionDuration: ViewConstants.longDuration),
       GetPage(
           name: RoutesConstants.addNotePageRouteName,
           page: () => const AddNotePage(),

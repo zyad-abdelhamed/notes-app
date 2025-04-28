@@ -22,5 +22,29 @@ ThemeData get getlighttheme {
         backgroundColor: AppColors.lightModePrimaryColor,
         shape: CircleBorder(),
         iconSize: 40),
+        inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: AppColors.grey.withOpacity(0.1), 
+      hintStyle: TextStyle(
+        color: AppColors.lightModePrimaryColor.withOpacity(0.5),
+        fontSize: 16,
+      ),
+      labelStyle: TextStyle(
+        color: AppColors.lightModePrimaryColor,
+        fontSize: 16,
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: AppColors.lightModePrimaryColor, width: 1),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: AppColors.lightModePrimaryColor, width: 1),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: AppColors.lightModePrimaryColor, width: 2),
+      ),
+    ),
   );
 }
