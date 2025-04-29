@@ -8,7 +8,8 @@ import 'package:notes_app/featuers/notes/presentation/view/components/home_note_
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-  final double spacing = 15.0;
+  static const double _spacing = 15.0;
+  static const int _crossAxisCount = 2;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LocalizationController>(
@@ -22,9 +23,9 @@ class HomePage extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: StaggeredGrid.count(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
+            crossAxisCount: _crossAxisCount,
+            mainAxisSpacing: _spacing,
+            crossAxisSpacing: _spacing,
             children: List.generate(
               5,
               (index) => HomeNoteWidget(
