@@ -1,58 +1,90 @@
 import 'package:dartz/dartz.dart';
+import 'package:get/get.dart';
 import 'package:notes_app/core/erorr/failure.dart';
-import 'package:notes_app/core/services/data_base_service.dart/notes_db_impl_by_sqflite.dart';
+import 'package:notes_app/core/services/data_base_service.dart/base_data_base_service.dart';
+import 'package:notes_app/featuers/notes/data/models/note_model.dart';
 import 'package:notes_app/featuers/notes/data/models/note_prameter.dart';
-import 'package:notes_app/featuers/notes/data/models/erorr_handler.dart';
 import 'package:notes_app/featuers/notes/domain/entities/note.dart';
 import 'package:notes_app/featuers/notes/domain/repos/base_note_repo.dart';
 
-class NoteRepo with BoolianMethodsErorrHandler, NotesGetMethodsErorrHandler implements BaseNoteRepo {
-  final NotesDatabaseImplBysqflite notesDatabaseImplBysqflite;
+class NoteRepo implements BaseNoteRepo {
+  final BaseNotesDataBaseService baseNotesDataBaseService;
 
-  NoteRepo({required this.notesDatabaseImplBysqflite});
+  NoteRepo({required this.baseNotesDataBaseService});
   @override
   Future<Either<Failure, Unit>> addNote(NotePrameter notePrameter) async {
-    int result = await notesDatabaseImplBysqflite.insert(notePrameter);
-    return handleErorrToBoolianMethods(result);
+    try {
+      await baseNotesDataBaseService.insert(notePrameter);
+      return const Right(unit);
+    } catch (_) {
+      return left(LacalDBFailure(message: "localDataBaseErorr".tr));
+    }
   }
 
   @override
-  Future<Either<Failure, Unit>> deleteNote(NotePrameter notePrameter) async {
-    int result = await notesDatabaseImplBysqflite.delete(notePrameter);
-    return handleErorrToBoolianMethods(result);
+  Future<Either<Failure, Unit>> deleteNote(dynamic id) async {
+    try {
+      await baseNotesDataBaseService.delete(id);
+      return const Right(unit);
+    } catch (_) {
+      return left(LacalDBFailure(message: "localDataBaseErorr".tr));
+    }
   }
 
   @override
   Future<Either<Failure, List<Note>>> getAllNotes() async {
-    List<Map<String, dynamic>> data = await notesDatabaseImplBysqflite.getAll();
-    return handleErorrToGetMethods(data);
+    try {
+      List<Map<String, dynamic>> data =
+          await baseNotesDataBaseService.fetchData();
+      return right(
+          List<Note>.from(data.map((e) => NoteModel.fromDataBase(e)).toList()));
+    } catch (_) {
+      return left(LacalDBFailure(message: "localDataBaseErorr".tr));
+    }
   }
 
   @override
   Future<Either<Failure, List<Note>>> getFavoriteNotes() async {
-    List<Map<String, dynamic>> data =
-        await notesDatabaseImplBysqflite.getFavorite();
-    return handleErorrToGetMethods(data);
+    try {
+      List<Map<String, dynamic>> data =
+          await baseNotesDataBaseService.getFavorites();
+      return right(
+          List<Note>.from(data.map((e) => NoteModel.fromDataBase(e)).toList()));
+    } catch (_) {
+      return left(LacalDBFailure(message: "localDataBaseErorr".tr));
+    }
   }
 
   @override
   Future<Either<Failure, List<Note>>> getNotesByCategory(
-      NotePrameter notePrameter) async {
-    List<Map<String, dynamic>> data =
-        await notesDatabaseImplBysqflite.getByCategory(notePrameter);
-    return handleErorrToGetMethods(data);
+      dynamic categoryId) async {
+    try {
+      List<Map<String, dynamic>> data =
+          await baseNotesDataBaseService.getByCategory(categoryId);
+      return right(
+          List<Note>.from(data.map((e) => NoteModel.fromDataBase(e)).toList()));
+    } catch (_) {
+      return left(LacalDBFailure(message: "localDataBaseErorr".tr));
+    }
   }
 
   @override
-  Future<Either<Failure, Unit>> toggleFavorite(
-      NotePrameter notePrameter) async {
-    int result = await notesDatabaseImplBysqflite.toggleFavorite(notePrameter);
-    return handleErorrToBoolianMethods(result);
+  Future<Either<Failure, Unit>> toggleFavorite(bool value, dynamic id) async {
+    try {
+      await baseNotesDataBaseService.toggleFavorite(value, id);
+      return const Right(unit);
+    } catch (_) {
+      return left(LacalDBFailure(message: "localDataBaseErorr".tr));
+    }
   }
 
   @override
   Future<Either<Failure, Unit>> updateNote(NotePrameter notePrameter) async {
-    int result = await notesDatabaseImplBysqflite.update(notePrameter);
-    return handleErorrToBoolianMethods(result);
+    try {
+      await baseNotesDataBaseService.update(notePrameter, notePrameter.id);
+      return const Right(unit);
+    } catch (_) {
+      return left(LacalDBFailure(message: "localDataBaseErorr".tr));
+    }
   }
 }

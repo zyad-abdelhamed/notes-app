@@ -11,19 +11,12 @@ class NoteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const List<IconData> icons = <IconData>[Icons.star, CupertinoIcons.delete];
-    const List<Color> iconsColor = <Color>[
-      AppColors.featuredIconColor,
-      Colors.grey
-    ];
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           boxShadow: ViewConstants.shadow,
-          color: Get.isDarkMode
-              ? AppColors.black
-              : AppColors.white),
+          color: Get.isDarkMode ? AppColors.black : AppColors.white),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,23 +30,38 @@ class NoteWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyles.regular14_150(context),
           ),
-          Row(crossAxisAlignment: CrossAxisAlignment.end,
-              children:[
-                ... List.generate(
-            2,
-            (index) => IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  icons[index],
-                  color: iconsColor[index],
-                )),
-          ),
-
-          Spacer(),
-          Text('${DateTime.now()}',style: TextStyles.regular14_150(context).copyWith(color:  Colors.grey),)
-              ])
+          NoteInfoWidget()
         ],
       ),
     );
+  }
+}
+
+class NoteInfoWidget extends StatelessWidget {
+  const NoteInfoWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const List<IconData> icons = <IconData>[Icons.star, CupertinoIcons.delete];
+    const List<Color> iconsColor = <Color>[
+      AppColors.featuredIconColor,
+      Colors.grey
+    ];
+    return Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+      ...List.generate(
+        2,
+        (index) => IconButton(
+            onPressed: () {},
+            icon: Icon(
+              icons[index],
+              color: iconsColor[index],
+            )),
+      ),
+      Spacer(),
+      Text(
+        '${DateTime.now()}',
+        style: TextStyles.regular14_150(context).copyWith(color: Colors.grey),
+      )
+    ]);
   }
 }

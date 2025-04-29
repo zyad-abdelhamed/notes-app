@@ -3,10 +3,14 @@ import 'package:get/get.dart';
 import 'package:notes_app/core/theme/text_styles.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_controller.dart';
 
-class AddNoteForm extends StatelessWidget {
-  const AddNoteForm({
+class NoteForm extends StatelessWidget {
+  const NoteForm({
     super.key,
+    required this.titleHintText,
+    required this.descreptionHintText,
   });
+  
+  final String titleHintText, descreptionHintText;
 
   @override
   Widget build(BuildContext context) {
@@ -18,22 +22,24 @@ class AddNoteForm extends StatelessWidget {
             child: Form(
                 key: controller.addFormKey,
                 child: Column(
-                  children: [
+                  children: <TextFormField>[
+                    //   ===title text field===
                     TextFormField(
-                      style: TextStyles.bold23(context: context),
-
-                     
-                      
-
-                      controller: controller.addTitelTextFieldController,
-                      maxLines: 2,
-                      maxLength: 10),
+                        style: TextStyles.bold23(context: context),
+                        decoration: InputDecoration(
+                            hintText: titleHintText,
+                            hintStyle: TextStyles.regular14_150(context),
+                            border: InputBorder.none),
+                        controller: controller.addTitelTextFieldController,
+                        maxLines: 2,
+                        maxLength: 10),
+                    //   ===descreption text field===
                     TextFormField(
                       style: TextStyles.regular14_150(context),
                       controller: controller.addDescreptionTextFieldController,
                       maxLines: 10000,
                       decoration: InputDecoration(
-                          hintText: "Write".tr,
+                          hintText: descreptionHintText,
                           hintStyle: TextStyles.regular14_150(context),
                           border: InputBorder.none),
                     )

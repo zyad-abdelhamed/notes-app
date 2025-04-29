@@ -1,22 +1,20 @@
-import 'package:notes_app/featuers/notes/data/models/note_prameter.dart';
+//   aply interface segregation prenciple
 
-// aply interface segregation prenciple
-mixin BaseCrudDataBaseService {
-  Future<int> insert(NotePrameter notePrameter);
-  Future<List<Map<String, dynamic>>> getAll();
-  Future<int> update(NotePrameter notePrameter);
-  Future<int> delete(NotePrameter notePrameter);
+abstract class BaseDataBaseService {
+  //   ===crud===
+  Future<void> insert(dynamic data);
+  Future<List<Map<String, dynamic>>> fetchData();
+  Future<void> update(dynamic newData, dynamic id);
+  Future<void> delete(dynamic id);
+  //   ===categories crud===
+   Future<List<Map<String, dynamic>>> getAllCategories();
+  Future<List<Map<String, dynamic>>> getByCategory(dynamic categoryId);
+  Future<void> updateCategory(dynamic id, String newName);
+  Future<void> insertCategory(String name);
+  Future<void> deleteCategory(dynamic id);
 }
 
-mixin BaseFavoriteDataBaseService {
-  Future<List<Map<String, dynamic>>> getFavorite();
-  Future<int> toggleFavorite(NotePrameter notePrameter);
-}
-
-mixin BaseCategoriesDataBaseService {
-  Future<List<Map<String, dynamic>>> getAllCategories();
-  Future<List<Map<String, dynamic>>> getByCategory(NotePrameter notePrameter);
-  Future<int> updateCategory(int id, String name);
-  Future<int> insertCategory(String name);
-  Future<int> deleteCategory(int id);
+abstract class BaseNotesDataBaseService implements BaseDataBaseService{
+  Future<List<Map<String, dynamic>>> getFavorites();
+  Future<void> toggleFavorite(bool value, dynamic id);
 }

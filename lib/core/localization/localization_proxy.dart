@@ -23,7 +23,6 @@ class Localization implements Translations {
   Map<String, Map<String, String>> get keys => {
         "ar": {
           "search":"بحث",
-          "splashcentertext": "دون ملاحظاتك",
           "hometitel": "ملاحظاتي",
           "DeviceLanguage":"لغه الجهاز",
           "AllFolders": "جميع\n  المجلدات",
@@ -36,14 +35,10 @@ class Localization implements Translations {
           "alertdescription": "confirm the deletion process?",
           "alertaction1": "cancel",
           "alertaction2": "delete",
-          "addpagetitle": "add note",
-          "titlefieldhint": "the title",
-          "bodyfieldhint": "write...",
           "localDataBaseErorr":""
         },
         "en": {
           "search":"search",
-          "splashcentertext": "take notes",
           "hometitel": "My\n  Notes",
           "DeviceLanguage": "device language",
           "AllFolders": "All\n  folders",
@@ -56,9 +51,6 @@ class Localization implements Translations {
           "alertdescription": "confirm the deletion process?",
           "alertaction1": "cancel",
           "alertaction2": "delete",
-          "addpagetitle": "add note",
-          "titlefieldhint": "the title",
-          "bodyfieldhint": "write...",
           "localDataBaseErorr":""
         }
       };

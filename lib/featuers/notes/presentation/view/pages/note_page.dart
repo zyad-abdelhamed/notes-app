@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/core/theme/app_colors.dart';
-import 'package:notes_app/featuers/notes/presentation/view/components/add_note_form.dart';
+import 'package:notes_app/featuers/notes/presentation/view/components/note_form.dart';
+import 'package:notes_app/featuers/notes/presentation/view/components/note_widget.dart';
 
 class AddNotePage extends StatelessWidget {
-  const AddNotePage({super.key});
+  const AddNotePage(
+      {super.key, required this.title, required this.descreption});
+  final String title, descreption;
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +19,8 @@ class AddNotePage extends StatelessWidget {
               ))
         ],
       ),
-      body: AddNoteForm(),
-      backgroundColor: AppColors.darkModePrimaryColor,
+      body: NoteForm(titleHintText: title, descreptionHintText: descreption),
+      bottomNavigationBar: NoteInfoWidget(),
     );
   }
 }

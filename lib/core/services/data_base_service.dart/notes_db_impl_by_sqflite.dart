@@ -1,16 +1,15 @@
 import 'package:notes_app/core/services/data_base_service.dart/base_data_base_service.dart';
 import 'package:notes_app/core/services/data_base_service.dart/sqflite_client.dart';
-import 'package:notes_app/featuers/notes/data/models/note_prameter.dart';
 
-class NotesDatabaseImplBysqflite with BaseCrudDataBaseService, BaseCategoriesDataBaseService, BaseFavoriteDataBaseService {
-  NotesDatabaseImplBysqflite({required this.sqfliteClient});
-  SqfliteClient  sqfliteClient;
+class NotesDatabaseImplBysqflite implements BaseNotesDataBaseService {
+  const NotesDatabaseImplBysqflite({required this.sqfliteClient});
+  final SqfliteClient sqfliteClient;
 
   // ===== CATEGORY CRUD =====
   @override
-  Future<int> insertCategory(String name) async {
+  Future<void> insertCategory(String name) async {
     final db = await sqfliteClient.database;
-    return await db.insert('categories', {'name': name});
+    await db.insert('categories', {'name': name});
   }
 
   @override
@@ -20,93 +19,90 @@ class NotesDatabaseImplBysqflite with BaseCrudDataBaseService, BaseCategoriesDat
   }
 
   @override
-  Future<int> updateCategory(int id, String name) async {
+  Future<void> updateCategory(dynamic id, String name) async {
     final db = await sqfliteClient.database;
-    return await db.update('categories', {'name': name},
+    await db.update('categories', {'name': name},
         where: 'id = ?', whereArgs: [id]);
   }
 
   @override
-  Future<int> deleteCategory(int id) async {
-  final db = await sqfliteClient.database;
+  Future<void> deleteCategory(dynamic id) async {
+    final db = await sqfliteClient.database;
 
-  // First, delete all notes in the category
-  await db.delete('notes', where: 'categoryId = ?', whereArgs: [id]);
+    // First, delete all notes in the category
+    await db.delete('notes', where: 'categoryId = ?', whereArgs: [id]);
 
-  // Then, delete the category itself
-  return await db.delete('categories', where: 'id = ?', whereArgs: [id]);
-}
-
+    // Then, delete the category itself
+    await db.delete('categories', where: 'id = ?', whereArgs: [id]);
+  }
 
   // ===== NOTE CRUD =====
   @override
-  Future<int> insert(NotePrameter notePrameter) async {
+  Future<void> insert(dynamic data) async {
     final db = await sqfliteClient.database;
-    return await db.insert('notes', {
-      'title': notePrameter.title,
-      'content': notePrameter.descreption,
-      'categoryId': notePrameter.categoryId,
-      'isFavorite': (notePrameter.isFeatured) ?? false ? 1 : 0,
+    await db.insert('notes', {
+      'title': data.title,
+      'content': data.descreption,
+      'categoryId': data.categoryId,
+      'isFavorite': (data.isFeatured) ?? false ? 1 : 0,
       'createdAt': DateTime.now().toIso8601String(),
     });
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getByCategory(
-      NotePrameter notePrameter) async {
+  Future<List<Map<String, dynamic>>> getByCategory(dynamic categoryId) async {
     final db = await sqfliteClient.database;
     return await db.query('notes',
         where: 'categoryId = ?',
-        whereArgs: [notePrameter.categoryId],
+        whereArgs: [categoryId],
         orderBy: 'createdAt DESC');
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getAll() async {
+  Future<List<Map<String, dynamic>>> fetchData() async {
     final db = await sqfliteClient.database;
     return await db.query('notes', orderBy: 'createdAt DESC');
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getFavorite() async {
+  Future<List<Map<String, dynamic>>> getFavorites() async {
     final db = await sqfliteClient.database;
     return await db.query('notes',
         where: 'isFavorite = ?', whereArgs: [1], orderBy: 'createdAt DESC');
   }
 
   @override
-  Future<int> update(NotePrameter notePrameter) async {
+  Future<void> update(dynamic newData, dynamic id) async {
     final db = await sqfliteClient.database;
     Map<String, dynamic> values = {
-      'title': notePrameter.title,
-      'content': notePrameter.descreption,
-      'isFavorite': notePrameter.isFeatured! ? 1 : 0,
+      'title': newData.title,
+      'content': newData.descreption,
+      'isFavorite': newData.isFeatured! ? 1 : 0,
       'updatedAt': DateTime.now().toIso8601String(),
     };
 
-    return await db.update(
+    await db.update(
       'notes',
       values,
       where: 'id = ?',
-      whereArgs: [notePrameter.id],
+      whereArgs: [id],
     );
   }
 
   @override
-  Future<int> toggleFavorite(NotePrameter notePrameter) async {
+  Future<void> toggleFavorite(bool value, dynamic id) async {
     final db = await sqfliteClient.database;
-    return await db.update(
+    await db.update(
       'notes',
-      {'isFavorite': notePrameter.isFeatured! ? 1 : 0},
+      {'isFavorite': value},
       where: 'id = ?',
-      whereArgs: [notePrameter.id],
+      whereArgs: [id],
     );
   }
 
   @override
-  Future<int> delete(NotePrameter notePrameter) async {
+  Future<void> delete(dynamic id) async {
     final db = await sqfliteClient.database;
-    return await db
-        .delete('notes', where: 'id = ?', whereArgs: [notePrameter.id]);
+    await db.delete('notes', where: 'id = ?', whereArgs: [id]);
   }
 }

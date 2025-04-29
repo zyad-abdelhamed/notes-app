@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class NotePrameter extends Equatable {
   final String? title, descreption;
-  final int? id,categoryId;
+  final dynamic id,categoryId;
   final bool? isFeatured;
 
   const NotePrameter(
