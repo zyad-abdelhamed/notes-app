@@ -34,6 +34,7 @@ class NotesDatabaseImplBysqflite implements BaseNotesDataBaseService {
 
     // Then, delete the category itself
     await db.delete('categories', where: 'id = ?', whereArgs: [id]);
+
   }
 
   // ===== NOTE CRUD =====

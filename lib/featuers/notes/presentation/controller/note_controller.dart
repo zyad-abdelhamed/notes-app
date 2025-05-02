@@ -8,120 +8,162 @@ import 'package:notes_app/featuers/notes/domain/repos/base_note_repo.dart';
 class NoteController extends GetxController {
   NoteController({required this.baseNoteRepo});
   final BaseNoteRepo baseNoteRepo;
-  ////////////////////
-  TextEditingController addTitelTextFieldController = TextEditingController();
-  TextEditingController addDescreptionTextFieldController =
-      TextEditingController();
-  GlobalKey addFormKey = GlobalKey<FormState>();
-  ///////////////////
-  RequestStateEnum addRequestStateEnum = RequestStateEnum.loading;
-  String errorMessageOfAdd = '';
-  RequestStateEnum updateRequestStateEnum = RequestStateEnum.loading;
-  String errorMessageOfupdate = '';
-  RequestStateEnum deleteRequestStateEnum = RequestStateEnum.loading;
-  String errorMessageOfDelete = '';
-  RequestStateEnum toggleRequestStateEnum = RequestStateEnum.loading;
-  String errorMessageOfToggle = '';
+
+  // Form Controllers
+  TextEditingController addTitleTextFieldController = TextEditingController();
+  TextEditingController addDescriptionTextFieldController = TextEditingController();
+  GlobalKey<FormState> addFormKey = GlobalKey<FormState>();
+
+  // Notes Data
   List<Note> notes = [];
-  RequestStateEnum getAllRequestStateEnum = RequestStateEnum.loading;
-  String errorMessageOfGetAll = '';
   List<Note> favouriteNotes = [];
-  RequestStateEnum getFavouroiteRequestStateEnum = RequestStateEnum.loading;
-  String errorMessageOfGetFavouroite = '';
   List<Note> notesByCategory = [];
-  RequestStateEnum notesByCategoryRequestStateEnum = RequestStateEnum.loading;
-  String errorMessageOfnotesByCategory = '';
-  ////////////////
-  addNotes(NotePrameter notePrameter) async {
-    var result = await baseNoteRepo.addNote(notePrameter);
-    result.fold((l) {
-      addRequestStateEnum = RequestStateEnum.failed;
-      errorMessageOfAdd = l.message;
-      update();
-    }, (r) {
-      addRequestStateEnum = RequestStateEnum.success;
-      update();
-    });
+
+  // States and Errors
+  RequestStateEnum addState = RequestStateEnum.loading;
+  String addError = '';
+
+  RequestStateEnum updateState = RequestStateEnum.loading;
+  String updateError = '';
+
+  RequestStateEnum deleteState = RequestStateEnum.loading;
+  String deleteError = '';
+
+  RequestStateEnum toggleState = RequestStateEnum.loading;
+  String toggleError = '';
+
+  RequestStateEnum allNotesState = RequestStateEnum.loading;
+  String allNotesError = '';
+
+  RequestStateEnum favouriteState = RequestStateEnum.loading;
+  String favouriteError = '';
+
+  RequestStateEnum categoryState = RequestStateEnum.loading;
+  String categoryError = '';
+
+  //========================
+  // CRUD OPERATIONS
+  //========================
+
+  Future<void> addNote(NotePrameter param) async {
+    addState = RequestStateEnum.loading;
+    update();
+
+    final result = await baseNoteRepo.addNote(param);
+    result.fold(
+      (l) {
+        addState = RequestStateEnum.failed;
+        addError = l.message;
+      },
+      (_) {
+        addState = RequestStateEnum.success;
+      },
+    );
+    update();
   }
 
-  ////////////////////
-  updateNote(NotePrameter notePrameter) async {
-    var result = await baseNoteRepo.updateNote(notePrameter);
-    result.fold((l) {
-      updateRequestStateEnum = RequestStateEnum.failed;
-      errorMessageOfupdate = l.message;
-      update();
-    }, (r) {
-      updateRequestStateEnum = RequestStateEnum.success;
-      update();
-    });
+  Future<void> updateNote(NotePrameter param) async {
+    updateState = RequestStateEnum.loading;
+    update();
+
+    final result = await baseNoteRepo.updateNote(param);
+    result.fold(
+      (l) {
+        updateState = RequestStateEnum.failed;
+        updateError = l.message;
+      },
+      (_) {
+        updateState = RequestStateEnum.success;
+      },
+    );
+    update();
   }
 
-  ///////////////////////
-  deleteNote() async {
-    var result = await baseNoteRepo.deleteNote();
-    result.fold((l) {
-      deleteRequestStateEnum = RequestStateEnum.failed;
-      errorMessageOfDelete = l.message;
-      update();
-    }, (r) {
-      deleteRequestStateEnum = RequestStateEnum.success;
-      update();
-    });
+  Future<void> deleteNote(NotePrameter param) async {
+    deleteState = RequestStateEnum.loading;
+    update();
+
+    final result = await baseNoteRepo.deleteNote(param);
+    result.fold(
+      (l) {
+        deleteState = RequestStateEnum.failed;
+        deleteError = l.message;
+      },
+      (_) {
+        deleteState = RequestStateEnum.success;
+      },
+    );
+    update();
   }
 
-  ///////////////////////////////
-  toggleFavorite(NotePrameter notePrameter) async {
-    var result = await baseNoteRepo.toggleFavorite(notePrameter);
-    result.fold((l) {
-      toggleRequestStateEnum = RequestStateEnum.failed;
-      errorMessageOfToggle = l.message;
-      update();
-    }, (r) {
-      toggleRequestStateEnum = RequestStateEnum.success;
-      update();
-    });
+  Future<void> toggleFavorite(bool value, dynamic id) async {
+    toggleState = RequestStateEnum.loading;
+    update();
+
+    final result = await baseNoteRepo.toggleFavorite(value, id);
+    result.fold(
+      (l) {
+        toggleState = RequestStateEnum.failed;
+        toggleError = l.message;
+      },
+      (_) {
+        toggleState = RequestStateEnum.success;
+      },
+    );
+    update();
   }
 
-  ///////////////////////////////
-  getAllNotes() async {
-    var result = await baseNoteRepo.getAllNotes();
-    result.fold((l) {
-      getAllRequestStateEnum = RequestStateEnum.failed;
-      errorMessageOfGetAll = l.message;
-      update();
-    }, (r) {
-      getAllRequestStateEnum = RequestStateEnum.success;
-      notes = r;
-      update();
-    });
+  Future<void> getAllNotes() async {
+    allNotesState = RequestStateEnum.loading;
+    update();
+
+    final result = await baseNoteRepo.getAllNotes();
+    result.fold(
+      (l) {
+        allNotesState = RequestStateEnum.failed;
+        allNotesError = l.message;
+      },
+      (r) {
+        notes = r;
+        allNotesState = RequestStateEnum.success;
+      },
+    );
+    update();
   }
 
-  //////////////////////////////
-  getFavouriteNotes() async {
-    var result = await baseNoteRepo.getFavoriteNotes();
-    result.fold((l) {
-      getFavouroiteRequestStateEnum = RequestStateEnum.failed;
-      errorMessageOfGetFavouroite = l.message;
-      update();
-    }, (r) {
-      getFavouroiteRequestStateEnum = RequestStateEnum.success;
-      favouriteNotes = r;
-      update();
-    });
+  Future<void> getFavouriteNotes() async {
+    favouriteState = RequestStateEnum.loading;
+    update();
+
+    final result = await baseNoteRepo.getFavoriteNotes();
+    result.fold(
+      (l) {
+        favouriteState = RequestStateEnum.failed;
+        favouriteError = l.message;
+      },
+      (r) {
+        favouriteNotes = r;
+        favouriteState = RequestStateEnum.success;
+      },
+    );
+    update();
   }
 
-  /////////////////////////////
-  getNotesByCategory() async {
-    var result = await baseNoteRepo.getNotesByCategory();
-    result.fold((l) {
-      notesByCategoryRequestStateEnum = RequestStateEnum.failed;
-      errorMessageOfnotesByCategory = l.message;
-      update();
-    }, (r) {
-      notesByCategoryRequestStateEnum = RequestStateEnum.success;
-      notesByCategory = r;
-      update();
-    });
+  Future<void> getNotesByCategory(dynamic categoryId) async {
+    categoryState = RequestStateEnum.loading;
+    update();
+
+    final result = await baseNoteRepo.getNotesByCategory(categoryId);
+    result.fold(
+      (l) {
+        categoryState = RequestStateEnum.failed;
+        categoryError = l.message;
+      },
+      (r) {
+        notesByCategory = r;
+        categoryState = RequestStateEnum.success;
+      },
+    );
+    update();
   }
 }

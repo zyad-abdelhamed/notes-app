@@ -2,15 +2,19 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class SqfliteDataBase {
-  Future<Database> initDB(String filePath) async {
+  Future<Database> initDB(String fileName) async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, filePath);
+    final path = join(dbPath, fileName);
 
-    return await openDatabase(path,
-        version: 2, onCreate: _createDB, onUpgrade: _upgradeDB);
+    return await openDatabase(
+      path,
+      version: 2,
+      onCreate: _createDB,
+      onUpgrade: _upgradeDB,
+    );
   }
 
-  Future _createDB(Database db, int version) async {
+  Future<void> _createDB(Database db, int version) async {
     await db.execute('''
       CREATE TABLE categories (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -32,10 +36,8 @@ class SqfliteDataBase {
     ''');
   }
 
-  Future _upgradeDB(Database db, int oldVersion, int newVersion) async {
+  Future<void> _upgradeDB(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
-      await db.execute(
-          "ALTER TABLE notes ADD COLUMN isFavorite INTEGER NOT NULL DEFAULT 0");
       await db.execute("ALTER TABLE notes ADD COLUMN updatedAt TEXT");
     }
   }

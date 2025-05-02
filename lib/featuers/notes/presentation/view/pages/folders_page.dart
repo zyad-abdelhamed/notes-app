@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:notes_app/core/helper_function/get_widget_depending_on_reuest_state.dart';
+import 'package:notes_app/featuers/notes/presentation/controller/note_category_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/add_folder_button.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/folder_widget.dart';
 
@@ -15,14 +17,16 @@ class FoldersPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: GridView.builder(
-          itemCount: 5,
+        child:GetBuilder<NoteCategoryController>(builder: (controller) {
+         return  getWidgetDependingOnReuestState(requestStateEnum: controller.fetchState, widgetIncaseSuccess: GridView.builder(
+          itemCount: controller.categories.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: spacing,
               mainAxisSpacing: spacing),
-          itemBuilder: (context, index) => FolderWidget(),
-        ),
+          itemBuilder: (context, index) => FolderWidget(name:controller.categories[index].categoryName , id: index,),
+        ), erorrMessage: controller.errorMessage);
+        },)
       ),
 
       floatingActionButton: AddFolderButton(),

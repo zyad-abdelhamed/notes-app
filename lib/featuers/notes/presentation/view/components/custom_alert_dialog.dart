@@ -19,45 +19,43 @@ class CustomAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final double width = context.width * .65;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          GestureDetector(
-              onTap: Get.back,
-              child: ColoredBox(color: AppColors.black.withValues(alpha: .3))),
-          Center(
-            child: Container(
-              width: width,
-              height: width * .85,
-              decoration: _boxDecorationToSuperContainer,
-              child: Column(
-                children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: TextStyles.bold23(context: context).copyWith(
-                        color: AppColors.black, fontWeight: FontWeight.normal),
+    return GestureDetector(
+      onTap:Get.back,
+
+      child: Scaffold(
+        backgroundColor: AppColors.grey.withValues(alpha: .3),
+        body: Center(
+          child: Container(
+            width: width,
+            height: width * .85,
+            decoration: _boxDecorationToSuperContainer,
+            child: Column(
+              children: [
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: TextStyles.bold23(context: context).copyWith(
+                      color: AppColors.black, fontWeight: FontWeight.normal),
+                ),
+                Divider(),
+                contentWidget(context),
+                Spacer(),
+                GestureDetector(
+                  onTap: onTap,
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    height: width * .20,
+                    decoration: _boxDecorationToSubContainer,
+                    child: Text(buttonText,
+                        style: TextStyles.semiBold16(context: context)
+                            .copyWith(color: AppColors.white)),
                   ),
-                  Divider(),
-                  contentWidget(context),
-                  Spacer(),
-                  GestureDetector(
-                    onTap: onTap,
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: double.infinity,
-                      height: width * .20,
-                      decoration: _boxDecorationToSubContainer,
-                      child: Text(buttonText,
-                          style: TextStyles.semiBold16(context: context)
-                              .copyWith(color: AppColors.white)),
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

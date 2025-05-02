@@ -26,7 +26,7 @@ ThemeData get getdarktheme {
       filled: true,
       fillColor: AppColors.grey.withOpacity(0.1), 
       hintStyle: TextStyle(
-        color: AppColors.darkModePrimaryColor.withOpacity(0.5),
+        color: AppColors.white,
         fontSize: 16,
       ),
       labelStyle: TextStyle(

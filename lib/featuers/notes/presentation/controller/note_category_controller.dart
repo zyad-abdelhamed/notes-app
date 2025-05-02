@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:notes_app/core/services/enums/request_state_enum.dart';
+import 'package:notes_app/core/erorr/failure.dart';
+import 'package:notes_app/featuers/notes/domain/entities/note_category.dart';
 import 'package:notes_app/featuers/notes/domain/repos/base_note_category_repo.dart';
 
 class NoteCategoryController extends GetxController {
@@ -12,8 +15,13 @@ class NoteCategoryController extends GetxController {
   TextEditingController categoryNameController = TextEditingController();
   GlobalKey<FormState> categoryFormKey = GlobalKey<FormState>();
 
-  List<Map<String, dynamic>> categories = [];
-  bool isLoading = false;
+  List<NoteCategory> categories = [];
+
+  RequestStateEnum fetchState = RequestStateEnum.loading;
+  RequestStateEnum addState = RequestStateEnum.loading;
+  RequestStateEnum updateState = RequestStateEnum.loading;
+  RequestStateEnum deleteState = RequestStateEnum.loading;
+
   String errorMessage = '';
 
   // =========================
@@ -21,63 +29,84 @@ class NoteCategoryController extends GetxController {
   // =========================
 
   Future<void> fetchAllCategories() async {
-    try {
-      isLoading = true;
-      update();
-      final result = await baseNoteCategoryRepo.getAllCategories();
-      categories = result;
-    } catch (e) {
-      errorMessage = 'حدث خطأ أثناء جلب التصنيفات: $e';
-    } finally {
-      isLoading = false;
-      update();
-    }
+    fetchState = RequestStateEnum.loading;
+    update();
+    final result = await baseNoteCategoryRepo.getAllCategories();
+    result.fold(
+      (Failure failure) {
+        errorMessage = failure.message;
+        fetchState = RequestStateEnum.failed;
+        print(failure.message);
+        update();
+      },
+      (List<NoteCategory> categoryNames) {
+        categories = categoryNames;
+
+        fetchState = RequestStateEnum.success;
+        print('fetch successfully');
+        update();
+      },
+    );
   }
 
   Future<void> addCategory(String name) async {
-    try {
-      isLoading = true;
+    if (categoryFormKey.currentState!.validate()) {
+      addState = RequestStateEnum.loading;
       update();
-      final id = await baseNoteCategoryRepo.insertCategory(name);
-      categories.add({'id': id, 'name': name});
-      categoryNameController.clear();
-    } catch (e) {
-      errorMessage = 'تعذر إضافة التصنيف: $e';
-    } finally {
-      isLoading = false;
-      update();
-    }
-  }
-
-  Future<void> updateCategory(int id, String newName) async {
-    try {
-      isLoading = true;
-      update();
-      await baseNoteCategoryRepo.updateCategory(id, newName);
-      final index = categories.indexWhere((c) => c['id'] == id);
-      if (index != -1) {
-        categories[index]['name'] = newName;
-      }
-    } catch (e) {
-      errorMessage = 'فشل التحديث: $e';
-    } finally {
-      isLoading = false;
+      final result = await baseNoteCategoryRepo.insertCategory(name);
+      result.fold(
+        (Failure failure) {
+          errorMessage = failure.message;
+          addState = RequestStateEnum.failed;
+        },
+        (_) async {
+          categoryNameController.clear();
+          addState = RequestStateEnum.success;
+          await fetchAllCategories();
+          Get.back();
+        },
+      );
       update();
     }
   }
 
-  Future<void> deleteCategory(int id) async {
-    try {
-      isLoading = true;
+  Future<void> updateCategory(int index, String newName) async {
+    if (categoryFormKey.currentState!.validate()) {
+      updateState = RequestStateEnum.loading;
       update();
-      await baseNoteCategoryRepo.deleteCategory(id);
-      categories.removeWhere((c) => c['id'] == id);
-    } catch (e) {
-      errorMessage = 'فشل الحذف: $e';
-    } finally {
-      isLoading = false;
+      final result = await baseNoteCategoryRepo.updateCategory(
+          categories[index].id, newName);
+      result.fold(
+        (Failure failure) {
+          errorMessage = failure.message;
+          updateState = RequestStateEnum.failed;
+        },
+        (_)async {
+          updateState = RequestStateEnum.success;
+          await fetchAllCategories();
+          Get.back();
+        },
+      );
       update();
     }
+  }
+
+  Future<void> deleteCategory(int index) async {
+    deleteState = RequestStateEnum.loading;
+    update();
+    final result =
+        await baseNoteCategoryRepo.deleteCategory(categories[index].id);
+    result.fold(
+      (Failure failure) {
+        errorMessage = failure.message;
+        deleteState = RequestStateEnum.failed;
+      },
+      (_) {
+        categories.removeAt(index);
+        deleteState = RequestStateEnum.success;
+      },
+    );
+    update();
   }
 
   @override

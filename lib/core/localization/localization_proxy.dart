@@ -22,6 +22,9 @@ class Localization implements Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         "ar": {
+          "update": "تعديل",
+          "add": "اضافه",
+          "delete": "حذف",
           "search":"بحث",
           "hometitel": "ملاحظاتي",
           "DeviceLanguage":"لغه الجهاز",
@@ -38,6 +41,9 @@ class Localization implements Translations {
           "localDataBaseErorr":""
         },
         "en": {
+          "update": "update",
+          "add": "add",
+          "delete": "delete",
           "search":"search",
           "hometitel": "My\n  Notes",
           "DeviceLanguage": "device language",

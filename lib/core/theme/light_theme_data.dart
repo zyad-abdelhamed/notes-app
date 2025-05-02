@@ -26,7 +26,7 @@ ThemeData get getlighttheme {
       filled: true,
       fillColor: AppColors.grey.withOpacity(0.1), 
       hintStyle: TextStyle(
-        color: AppColors.lightModePrimaryColor.withOpacity(0.5),
+        color: AppColors.black,
         fontSize: 16,
       ),
       labelStyle: TextStyle(
