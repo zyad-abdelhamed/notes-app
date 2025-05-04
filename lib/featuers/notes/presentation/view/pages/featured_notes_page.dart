@@ -14,10 +14,10 @@ class FeaturedNotesPage extends StatelessWidget {
         ),
       ),
 
-      body: ListView.builder(
-        itemCount: 5,
-        itemBuilder: (context, index) => NoteWidget()
-        ),
+      // body: ListView.builder(
+      //   itemCount: 5,
+      //   itemBuilder: (context, index) => NoteWidget()
+      //   ),
     );
   }
 }

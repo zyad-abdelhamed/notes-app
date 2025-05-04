@@ -38,8 +38,8 @@ class NoteRepo implements BaseNoteRepo {
           await baseNotesDataBaseService.fetchData();
       return right(
           List<Note>.from(data.map((e) => NoteModel.fromDataBase(e)).toList()));
-    } catch (_) {
-      return left(LacalDBFailure(message: "localDataBaseErorr".tr));
+    } catch (e) {
+      return left(LacalDBFailure(message:e.toString()));
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:notes_app/featuers/notes/presentation/controller/note_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/note_form.dart';
 
 class AddNotePage extends StatelessWidget {
@@ -7,6 +8,7 @@ class AddNotePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   final NoteController controller = Get.find();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -14,7 +16,9 @@ class AddNotePage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                controller.addNote();
+              },
               icon: const Icon(
                 Icons.done,
               ))

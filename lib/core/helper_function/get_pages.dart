@@ -10,6 +10,7 @@ import 'package:notes_app/featuers/notes/presentation/view/pages/search_page.dar
 import 'package:notes_app/featuers/splash_screen/presentation/view/pages/splash_screen_page.dart';
 
 List<GetPage<dynamic>>? get getPages => <GetPage<dynamic>>[
+   
       GetPage(
           name: RoutesConstants.searchScreenPageRouteName,
           page: () => const SearchPage(),

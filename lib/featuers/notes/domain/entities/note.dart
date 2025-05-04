@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 class Note extends Equatable {
-  final String title, descreption, createdAt, lastUpdate;
+  final String title, descreption, createdAt;
+  final String? lastUpdate;
   final bool isFeatured;
   const Note(
       {required this.title,

@@ -20,7 +20,7 @@ class AddNotePage extends StatelessWidget {
         ],
       ),
       body: NoteForm(titleHintText: title, descreptionHintText: descreption),
-      bottomNavigationBar: NoteInfoWidget(),
+    //  bottomNavigationBar: NoteInfoWidget(),
     );
   }
 }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/core/constants/routes_constants.dart';
-import 'package:notes_app/core/localization/localization_proxy.dart';
+import 'package:notes_app/core/helper_function/get_widget_depending_on_reuest_state.dart';
+import 'package:notes_app/featuers/notes/presentation/controller/note_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/home_app_bar_actions.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/home_note_widget.dart';
 
@@ -12,8 +13,8 @@ class HomePage extends StatelessWidget {
   static const int _crossAxisCount = 2;
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LocalizationController>(
-      builder: (controller) => Scaffold(
+    return
+      Scaffold(
         appBar: AppBar(
           title: Text("hometitel".tr),
           bottom: PreferredSize(
@@ -22,17 +23,19 @@ class HomePage extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: StaggeredGrid.count(
+          child: GetBuilder<NoteController>(builder: (controller) {
+            return getWidgetDependingOnReuestState(requestStateEnum: controller.allNotesState, widgetIncaseSuccess:  StaggeredGrid.count(
             crossAxisCount: _crossAxisCount,
             mainAxisSpacing: _spacing,
             crossAxisSpacing: _spacing,
             children: List.generate(
-              5,
+              controller.notes.length,
               (index) => HomeNoteWidget(
-                  title: 'hello world', descreption: _desc[index]),
+                  title: controller.notes[index].title, descreption:controller.notes[index].descreption, ),
             ),
           ),
-        ),
+         erorrMessage: controller.allNotesError);
+          },)),
         floatingActionButton: Column(
           spacing: 5,
           mainAxisAlignment: MainAxisAlignment.end,
@@ -50,15 +53,6 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }
-
-List _desc = [
-  'hello worldhello worldhello world',
-  'hello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello world',
-  'hello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello world',
-  'hello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello world',
-  'hello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello world'
-];

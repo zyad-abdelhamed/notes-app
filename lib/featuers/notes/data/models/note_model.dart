@@ -14,6 +14,6 @@ class NoteModel extends Note {
         descreption: data['content'],
         createdAt: data['createdAt'],
         lastUpdate: data['updatedAt'],
-        isFeatured: data['isFavorite']);
+        isFeatured: data['isFavorite'] == 0? false : true);
   }
 }

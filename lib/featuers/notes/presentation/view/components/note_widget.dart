@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 import 'package:notes_app/core/constants/view_constants.dart';
 import 'package:notes_app/core/theme/app_colors.dart';
 import 'package:notes_app/core/theme/text_styles.dart';
+import 'package:notes_app/featuers/notes/domain/entities/note.dart';
 
 class NoteWidget extends StatelessWidget {
-  const NoteWidget({super.key});
+  const NoteWidget({super.key, required this.note});
+  final Note note;
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +23,18 @@ class NoteWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'hello world',
+            note.title,
             style: TextStyles.bold23(context: context),
           ),
           Text(
-            'hello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhelloworldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello world',
+            note.descreption,
             maxLines: 5,
             overflow: TextOverflow.ellipsis,
             style: TextStyles.regular14_150(context),
           ),
-          NoteInfoWidget()
+          NoteInfoWidget(
+            note: note,
+          )
         ],
       ),
     );
@@ -38,8 +42,8 @@ class NoteWidget extends StatelessWidget {
 }
 
 class NoteInfoWidget extends StatelessWidget {
-  const NoteInfoWidget({super.key});
-
+  const NoteInfoWidget({super.key, required this.note});
+  final Note note;
   @override
   Widget build(BuildContext context) {
     const List<IconData> icons = <IconData>[Icons.star, CupertinoIcons.delete];
@@ -59,9 +63,30 @@ class NoteInfoWidget extends StatelessWidget {
       ),
       Spacer(),
       Text(
-        '${DateTime.now()}',
-        style: TextStyles.regular14_150(context).copyWith(color: Colors.grey),
+        data,
+        style: TextStyles.regular12(context).copyWith(color: Colors.grey),
       )
     ]);
+  }
+
+  String get data {
+    DateTime createdAt = DateTime.parse(note.createdAt);
+
+    String formattedCreatedDate = DateFormat('yyyy-MM-dd').format(createdAt);
+    String formattedCreatedTime = DateFormat('HH:mm').format(createdAt);
+
+    String result =
+        'تاريخ الانشاء: $formattedCreatedDate $formattedCreatedTime';
+
+    if (note.lastUpdate != null) {
+      DateTime lastUpdatedAt = DateTime.parse(note.lastUpdate!);
+      String formattedUpdatedDate =
+          DateFormat('yyyy-MM-dd').format(lastUpdatedAt);
+      String formattedUpdatedTime =
+          DateFormat('HH:mm').format(lastUpdatedAt);
+      result += '\nآخر تحديث: $formattedUpdatedDate $formattedUpdatedTime';
+    }
+
+    return result;
   }
 }

@@ -34,10 +34,12 @@ class NotesDatabaseImplBysqflite implements BaseNotesDataBaseService {
 
     // Then, delete the category itself
     await db.delete('categories', where: 'id = ?', whereArgs: [id]);
-
   }
 
   // ===== NOTE CRUD =====
+  String get getCurrentDateTime =>
+      DateTime.now().toIso8601String().substring(0, 16);
+
   @override
   Future<void> insert(dynamic data) async {
     final db = await sqfliteClient.database;
@@ -46,7 +48,7 @@ class NotesDatabaseImplBysqflite implements BaseNotesDataBaseService {
       'content': data.descreption,
       'categoryId': data.categoryId,
       'isFavorite': (data.isFeatured) ?? false ? 1 : 0,
-      'createdAt': DateTime.now().toIso8601String(),
+      'createdAt':getCurrentDateTime,
     });
   }
 
@@ -79,7 +81,7 @@ class NotesDatabaseImplBysqflite implements BaseNotesDataBaseService {
       'title': newData.title,
       'content': newData.descreption,
       'isFavorite': newData.isFeatured! ? 1 : 0,
-      'updatedAt': DateTime.now().toIso8601String(),
+      'updatedAt': getCurrentDateTime,
     };
 
     await db.update(

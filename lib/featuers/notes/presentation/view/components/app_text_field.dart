@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 appTextField(
@@ -5,8 +7,9 @@ appTextField(
     required String titleHintText,
     required TextStyle hintStyle,
     required TextEditingController controller,
-    required int maxLines,
-    required int maxLength}) {
+     int? maxLines,
+     bool expands = false,
+     int? maxLength}) {
   return Theme(
     data: ThemeData(
       inputDecorationTheme:
@@ -26,6 +29,7 @@ appTextField(
         ),
         controller: controller,
         maxLines: maxLines,
+        expands:expands ,
         maxLength: maxLength),
   );
 }
