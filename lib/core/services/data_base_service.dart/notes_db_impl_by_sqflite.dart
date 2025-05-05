@@ -80,7 +80,7 @@ class NotesDatabaseImplBysqflite implements BaseNotesDataBaseService {
     Map<String, dynamic> values = {
       'title': newData.title,
       'content': newData.descreption,
-      'isFavorite': newData.isFeatured! ? 1 : 0,
+      'categoryId': newData.categoryId, 
       'updatedAt': getCurrentDateTime,
     };
 

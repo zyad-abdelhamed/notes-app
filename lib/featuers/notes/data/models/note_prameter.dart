@@ -8,5 +8,5 @@ class NotePrameter extends Equatable {
   const NotePrameter(
       {this.id, this.title, this.descreption, this.categoryId, this.isFeatured});
   @override
-  List<Object?> get props => [title, descreption, isFeatured];
+  List<Object?> get props => [title, descreption, isFeatured, id,categoryId];
 }

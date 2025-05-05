@@ -25,8 +25,8 @@ class AddNotePage extends StatelessWidget {
         ],
       ),
       body: NoteForm(
-        titleHintText: "Title".tr,
-        descreptionHintText: "Write".tr,
+       
+       
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 TextFormField appTextField(
     {required BuildContext context,
     required String titleHintText,
+    ValueChanged<String>? onChanged,
     required TextStyle hintStyle,
     TextStyle? style,
     required TextEditingController controller,
@@ -17,6 +18,7 @@ TextFormField appTextField(
         }
         return null;
       },
+      onChanged:onChanged ,
       decoration: InputDecoration(
         hintStyle: hintStyle,
         border: InputBorder.none,

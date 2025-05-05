@@ -42,12 +42,14 @@ List<Widget> appBarActions(BuildContext context) {
               languagesStrings.length,
               (index) => TextButton(
                   onPressed: () {
+                    
                     language = languagesStrings[index];
-                    if(language == 'english'){
+                    if(language == 'English'){
                       Get.updateLocale(Locale('en'));
                     }else if(language == 'العربيه'){
                       Get.updateLocale(Locale('ar'));
                     }
+                   Get.back();
                   },
                   child: Text(languagesStrings[index],
                       style: TextStyles.bold23(context: context)

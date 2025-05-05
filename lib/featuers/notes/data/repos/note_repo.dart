@@ -16,8 +16,8 @@ class NoteRepo implements BaseNoteRepo {
     try {
       await baseNotesDataBaseService.insert(notePrameter);
       return const Right(unit);
-    } catch (_) {
-      return left(LacalDBFailure(message: "localDataBaseErorr".tr));
+    } catch (e) {
+      return left(LacalDBFailure(message: e.toString()));
     }
   }
 
@@ -83,8 +83,8 @@ class NoteRepo implements BaseNoteRepo {
     try {
       await baseNotesDataBaseService.update(notePrameter, notePrameter.id);
       return const Right(unit);
-    } catch (_) {
-      return left(LacalDBFailure(message: "localDataBaseErorr".tr));
+    } catch (e) {
+      return left(LacalDBFailure(message:e.toString()));
     }
   }
 }

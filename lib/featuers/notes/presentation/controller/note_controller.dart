@@ -9,7 +9,7 @@ import 'package:notes_app/featuers/notes/domain/repos/base_note_repo.dart';
 class NoteController extends GetxController {
   NoteController({required this.baseNoteRepo});
   final BaseNoteRepo baseNoteRepo;
-
+  RxBool soli = false.obs;
   int? categoryId;
   //dropdownbutton
   String selectedValue = '';
@@ -20,10 +20,18 @@ class NoteController extends GetxController {
   }
 
   // Form Controllers
-  final TextEditingController noteTitleTextFieldController = TextEditingController();
+  final TextEditingController noteTitleTextFieldController =
+      TextEditingController();
   final TextEditingController noteDescriptionTextFieldController =
       TextEditingController();
   final GlobalKey<FormState> addFormKey = GlobalKey<FormState>();
+
+  bool isEditing(Note note) {
+    soli.value = (noteTitleTextFieldController.text != note.title ||
+        noteDescriptionTextFieldController.text != note.descreption);
+
+    return soli.value;
+  }
 
   // Notes Data
   List<Note> notes = [];
@@ -58,6 +66,7 @@ class NoteController extends GetxController {
         (l) {
           addState = RequestStateEnum.failed;
           addError = l.message;
+          print(l.message);
         },
         (_) {
           addState = RequestStateEnum.success;
@@ -68,18 +77,23 @@ class NoteController extends GetxController {
     }
   }
 
-  Future<void> updateNote(NotePrameter param) async {
+  Future<void> updateNote({required Note note}) async {
     updateState = RequestStateEnum.loading;
     update();
 
-    final result = await baseNoteRepo.updateNote(param);
+    final result = await baseNoteRepo.updateNote(NotePrameter(id:note.id  , categoryId:categoryId , 
+          title: noteTitleTextFieldController.text,
+          descreption: noteDescriptionTextFieldController.text ));
     result.fold(
       (l) {
         updateState = RequestStateEnum.failed;
         updateError = l.message;
+
       },
       (_) {
         updateState = RequestStateEnum.success;
+        print(note.categoryId );
+        Get.back();
       },
     );
     update();
@@ -120,6 +134,7 @@ class NoteController extends GetxController {
       },
     );
   }
+
   @override
   void onClose() {
     clearTextEditingControllers();
@@ -132,8 +147,8 @@ class NoteController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onReady() {
     getAllNotes();
-    super.onInit();
+    super.onReady();
   }
 }

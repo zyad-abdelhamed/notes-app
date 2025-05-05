@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:notes_app/core/theme/app_colors.dart';
 import 'package:notes_app/core/theme/text_styles.dart';
 import 'package:notes_app/core/widgets/empty_list_widget.dart';
+import 'package:notes_app/featuers/notes/domain/entities/note.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_category_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/add_folder_functionality.dart';
@@ -11,16 +12,19 @@ import 'package:notes_app/featuers/notes/presentation/view/components/app_text_f
 class NoteForm extends StatelessWidget {
   const NoteForm({
     super.key,
-    required this.titleHintText,
-    required this.descreptionHintText,
+    this.note, this.onChanged,
   });
 
-  final String titleHintText, descreptionHintText;
+  final Note? note;
+   final   ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<NoteController>(
+      
       builder: (controller) {
+           
+
         return Padding(
           padding: const EdgeInsets.all(10),
           child: Form(
@@ -30,9 +34,10 @@ class NoteForm extends StatelessWidget {
               children: [
                 // === Title Field ===
                 appTextField(
+                  onChanged:onChanged,
                   context: context,
                   controller: controller.noteTitleTextFieldController,
-                  titleHintText: titleHintText,
+                  titleHintText: "Title".tr,
                   hintStyle: TextStyles.bold23(context: context).copyWith(
                       fontSize: 27,
                       color:
@@ -43,7 +48,7 @@ class NoteForm extends StatelessWidget {
                 // === Dropdown ===
                 GetBuilder<NoteCategoryController>(
                   builder: (noteCategoryController) {
-                    return noteCategoryController.categories.isEmpty
+                    return noteCategoryController.categories.isNotEmpty
                         ? SizedBox(
                             width: context.width * 1 / 3,
                             child: DropdownButtonFormField<String>(
@@ -57,9 +62,8 @@ class NoteForm extends StatelessWidget {
                                             : AppColors.black),
                                 border: InputBorder.none,
                               ),
-                              value: controller.selectedValue.isEmpty
-                                  ? null
-                                  : controller.selectedValue,
+                              value:
+                                  getFolder(controller, noteCategoryController),
                               items: noteCategoryController.categories
                                   .map((e) => e.categoryName)
                                   .toList()
@@ -98,9 +102,10 @@ class NoteForm extends StatelessWidget {
                 // === Description Field ===
                 Expanded(
                   child: appTextField(
+                    onChanged:onChanged,
                     context: context,
                     controller: controller.noteDescriptionTextFieldController,
-                    titleHintText: descreptionHintText,
+                    titleHintText: "Write".tr,
                     hintStyle: TextStyles.regular14_150(context).copyWith(
                         color:
                             Get.isDarkMode ? AppColors.white : AppColors.black),
@@ -115,5 +120,14 @@ class NoteForm extends StatelessWidget {
         );
       },
     );
+  }
+
+  String? getFolder(NoteController controller,
+      NoteCategoryController noteCategoryController) {
+    return note == null
+        ? controller.selectedValue.isEmpty
+            ? null
+            : controller.selectedValue
+        : noteCategoryController.categories[note!.categoryId].categoryName;
   }
 }
