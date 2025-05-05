@@ -16,6 +16,6 @@ abstract class ViewConstants {
 
   static const List<String> constantsLanguagesStrings = <String>[
     "العربيه",
-    "english"
+    "English"
   ];
 }

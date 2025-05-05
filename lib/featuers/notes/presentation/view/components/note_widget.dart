@@ -6,6 +6,7 @@ import 'package:notes_app/core/constants/view_constants.dart';
 import 'package:notes_app/core/theme/app_colors.dart';
 import 'package:notes_app/core/theme/text_styles.dart';
 import 'package:notes_app/featuers/notes/domain/entities/note.dart';
+import 'package:notes_app/featuers/notes/presentation/controller/featured_notes_controller.dart';
 
 class NoteWidget extends StatelessWidget {
   const NoteWidget({super.key, required this.note});
@@ -46,26 +47,27 @@ class NoteInfoWidget extends StatelessWidget {
   final Note note;
   @override
   Widget build(BuildContext context) {
-    const List<IconData> icons = <IconData>[Icons.star, CupertinoIcons.delete];
-    const List<Color> iconsColor = <Color>[
-      AppColors.featuredIconColor,
-      Colors.grey
-    ];
-    return Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-      ...List.generate(
-        2,
-        (index) => IconButton(
-            onPressed: () {},
-            icon: Icon(
-              icons[index],
-              color: iconsColor[index],
-            )),
-      ),
-      Spacer(),
+    return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
       Text(
         data,
         style: TextStyles.regular12(context).copyWith(color: Colors.grey),
-      )
+      ),
+      Spacer(),
+      IconButton(
+          onPressed: () {},
+          icon: const Icon(CupertinoIcons.delete, color: Colors.grey)),
+      GetBuilder<FeaturedNotesController>(
+        builder: (controller) => IconButton(
+            onPressed: () =>
+                controller.toggleFavorite(note.isFeatured ? 0 : 1, note.id),
+            icon: AnimatedScale(
+                duration: ViewConstants.longDuration,
+                scale: controller.scale,
+                child: Icon(note.isFeatured ? Icons.star : Icons.star_outline,
+                    color: note.isFeatured
+                        ? AppColors.featuredIconColor
+                        : Colors.grey))),
+      ),
     ]);
   }
 
@@ -82,8 +84,7 @@ class NoteInfoWidget extends StatelessWidget {
       DateTime lastUpdatedAt = DateTime.parse(note.lastUpdate!);
       String formattedUpdatedDate =
           DateFormat('yyyy-MM-dd').format(lastUpdatedAt);
-      String formattedUpdatedTime =
-          DateFormat('HH:mm').format(lastUpdatedAt);
+      String formattedUpdatedTime = DateFormat('HH:mm').format(lastUpdatedAt);
       result += '\nآخر تحديث: $formattedUpdatedDate $formattedUpdatedTime';
     }
 

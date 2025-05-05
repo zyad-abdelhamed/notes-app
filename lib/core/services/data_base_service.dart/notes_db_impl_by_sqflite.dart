@@ -93,7 +93,7 @@ class NotesDatabaseImplBysqflite implements BaseNotesDataBaseService {
   }
 
   @override
-  Future<void> toggleFavorite(bool value, dynamic id) async {
+  Future<void> toggleFavorite(int value, dynamic id) async {
     final db = await sqfliteClient.database;
     await db.update(
       'notes',

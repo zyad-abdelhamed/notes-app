@@ -16,5 +16,5 @@ abstract class BaseDataBaseService {
 
 abstract class BaseNotesDataBaseService implements BaseDataBaseService{
   Future<List<Map<String, dynamic>>> getFavorites();
-  Future<void> toggleFavorite(bool value, dynamic id);
+  Future<void> toggleFavorite(int value, dynamic id);
 }

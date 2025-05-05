@@ -69,7 +69,7 @@ class NoteRepo implements BaseNoteRepo {
   }
 
   @override
-  Future<Either<Failure, Unit>> toggleFavorite(bool value, dynamic id) async {
+  Future<Either<Failure, Unit>> toggleFavorite(int value, dynamic id) async {
     try {
       await baseNotesDataBaseService.toggleFavorite(value, id);
       return const Right(unit);

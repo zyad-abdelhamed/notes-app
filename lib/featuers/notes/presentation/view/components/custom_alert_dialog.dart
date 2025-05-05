@@ -23,7 +23,7 @@ class CustomAlertDialog extends StatelessWidget {
       onTap:Get.back,
 
       child: Scaffold(
-        backgroundColor: AppColors.grey.withValues(alpha: .3),
+        backgroundColor: AppColors.grey.withValues(alpha: .2),
         body: Center(
           child: Container(
             width: width,
@@ -38,7 +38,10 @@ class CustomAlertDialog extends StatelessWidget {
                       color: AppColors.black, fontWeight: FontWeight.normal),
                 ),
                 Divider(),
-                contentWidget(context),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: contentWidget(context),
+                ),
                 Spacer(),
                 GestureDetector(
                   onTap: onTap,

@@ -1,15 +1,16 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-class LocalizationController extends GetxController {
-  Locale currentLanguage = Get.deviceLocale!;
+class LocalizationController {
+  static Locale currentLanguage = Get.deviceLocale!;
   changeLanguage({required Languages language}) {
     switch (language) {
       case Languages.deviceLanguage:
         currentLanguage = Get.deviceLocale!;
+
       case Languages.arabic:
         currentLanguage = Locale('ar');
-           update(); 
+
       case Languages.english:
         currentLanguage = Locale('en');
     }
@@ -25,26 +26,25 @@ class Localization implements Translations {
           "update": "تعديل",
           "add": "اضافه",
           "delete": "حذف",
-          "search":"بحث",
           "hometitel": "ملاحظاتي",
-          "DeviceLanguage":"لغه الجهاز",
+          "DeviceLanguage": "لغه الجهاز",
           "AllFolders": "جميع\n  المجلدات",
           "AddNote": "إضافة\n  ملاحظه",
           "Title": "العنوان",
           "Write": "دون...",
           "FeaturedNotes": "الملاحظات\n  المميزه",
           "CreateNewFolder": "انشاء مجلد جديد",
-          "searchhint": "search within my notes🔦",
-          "alertdescription": "confirm the deletion process?",
-          "alertaction1": "cancel",
-          "alertaction2": "delete",
-          "localDataBaseErorr":""
+          "SearchHint": "البحث ضمن ملاحظاتي",
+          "DeleteConfirmation":"تأكيد الحذف",
+          "AreYouSureYouWantToDeleteThisItem":"هل أنت متأكد أنك تريد حذف هذا العنصر؟",
+          "Cancel": "حذف",
+          "Delete": "إلغاء",
+          "localDataBaseErorr": ""
         },
         "en": {
           "update": "update",
           "add": "add",
           "delete": "delete",
-          "search":"search",
           "hometitel": "My\n  Notes",
           "DeviceLanguage": "device language",
           "AllFolders": "All\n  folders",
@@ -53,11 +53,12 @@ class Localization implements Translations {
           "Write": "write...",
           "FeaturedNotes": "Featured\n  Notes",
           "CreateNewFolder": "create new folder",
-          "searchhint": "search within my notes🔦",
-          "alertdescription": "confirm the deletion process?",
-          "alertaction1": "cancel",
-          "alertaction2": "delete",
-          "localDataBaseErorr":""
+          "SearchHint": "search within my notes",
+          "DeleteConfirmation": "Delete Confirmation",
+          "AreYouSureYouWantToDeleteThisItem":"are you sure you want to delete this item?",
+          "Cancel": "cancel",
+          "Delete": "delete",
+          "localDataBaseErorr": ""
         }
       };
 }

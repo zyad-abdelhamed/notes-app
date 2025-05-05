@@ -21,12 +21,12 @@ class FolderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NoteCategoryController controller = Get.find();
-      final NotesByCategoryConroller noteController = Get.find();
+    final NotesByCategoryConroller noteController = Get.find();
 
     return GestureDetector(
       onTap: () {
         Get.to(CategoryNotesPage(categoryId: id));
-         noteController.getNotesByCategory(id);
+        noteController.getNotesByCategory(id);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -42,9 +42,6 @@ class FolderWidget extends StatelessWidget {
                   Icon(
                     Icons.folder,
                     size: 80,
-                    color: Get.isDarkMode
-                        ? AppColors.darkModePrimaryColor
-                        : AppColors.lightModePrimaryColor,
                   ),
                   const SizedBox(height: 10),
                   Text(
@@ -61,34 +58,34 @@ class FolderWidget extends StatelessWidget {
               child: PopupMenuButton<String>(
                 icon: Icon(
                   Icons.more_vert,
-                  color: Colors.grey,
                 ),
                 onSelected: (value) {
                   if (value == 'update') {
-                                      controller.categoryNameController.text = name;
-      
+                    controller.categoryNameController.text = name;
+
                     showDialog(
-              context: context,
-              builder: (context) => CustomAlertDialog(
-                  contentWidget: (context) => Form(
-                    key: controller.categoryFormKey,
-                    child: appTextField(
                         context: context,
-                        titleHintText: '',
-                        hintStyle: TextStyles.semiBold16(context: context),
-                        controller: controller.categoryNameController,
-                        maxLines: 2,
-                        maxLength: 31),
-                  ),
-                  onTap: () {
-                    controller
-                        .updateCategory(id, controller.categoryNameController.text);
-                    
-                  },
-                  buttonText: 'update'.tr,
-                  title: 'update category'));
+                        builder: (context) => CustomAlertDialog(
+                            contentWidget: (context) => Form(
+                                  key: controller.categoryFormKey,
+                                  child: appTextField(
+                                      context: context,
+                                      titleHintText: '',
+                                      hintStyle: TextStyles.semiBold16(
+                                          context: context),
+                                      controller:
+                                          controller.categoryNameController,
+                                      maxLines: 2,
+                                      maxLength: 31),
+                                ),
+                            onTap: () {
+                              controller.updateCategory(
+                                  id, controller.categoryNameController.text);
+                            },
+                            buttonText: 'update'.tr,
+                            title: 'update category'));
                   } else if (value == 'delete') {
-                    showDeleteConfirmationDialog(
+                    showDeleteConfirmationDialog(context,
                       onConfirm: () => controller.deleteCategory(id),
                     );
                   }
@@ -100,8 +97,9 @@ class FolderWidget extends StatelessWidget {
                       child: Text(
                         'update'.tr,
                         style: TextStyle(
-                          color:
-                              Get.isDarkMode ? AppColors.white : AppColors.black,
+                          color: Get.isDarkMode
+                              ? AppColors.white
+                              : AppColors.black,
                         ),
                       ),
                     ),
@@ -112,14 +110,14 @@ class FolderWidget extends StatelessWidget {
                       child: Text(
                         'delete'.tr,
                         style: TextStyle(
-                          color:
-                              Get.isDarkMode ? AppColors.white : AppColors.black,
+                          color: Get.isDarkMode
+                              ? AppColors.white
+                              : AppColors.black,
                         ),
                       ),
                     ),
                   ),
                 ],
-                color: Get.isDarkMode ? AppColors.grey : AppColors.white,
               ),
             ),
           ],

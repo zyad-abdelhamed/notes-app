@@ -10,7 +10,8 @@ class CategoryNotesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
    
-    return Scaffold(body: GetBuilder<NotesByCategoryConroller>(
+    return Scaffold(appBar: AppBar(),
+      body: GetBuilder<NotesByCategoryConroller>(
       builder: (controller) {
         return getWidgetDependingOnReuestState(
             requestStateEnum: controller.categoryState,

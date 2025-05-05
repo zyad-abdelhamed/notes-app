@@ -1,34 +1,22 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/core/theme/app_colors.dart';
+import 'package:notes_app/core/theme/text_styles.dart';
 
-void showDeleteConfirmationDialog({
+void showDeleteConfirmationDialog(
+  BuildContext context, {
   required VoidCallback onConfirm,
 }) {
   Get.defaultDialog(
-    title: 'تأكيد الحذف',
-    titleStyle: TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 20,
-      color: Get.isDarkMode ? AppColors.white : AppColors.black,
-    ),
-    middleText: 'هل أنت متأكد أنك تريد حذف هذا العنصر؟',
-    middleTextStyle: TextStyle(
-      fontSize: 16,
-      color: Get.isDarkMode ? AppColors.white : AppColors.black,
-    ),
-    backgroundColor: Get.isDarkMode ? AppColors.grey2 : AppColors.white,
+    title: "DeleteConfirmation".tr,
+    titleStyle: TextStyles.bold23(context: context),
+    middleText: "AreYouSureYouWantToDeleteThisItem".tr,
+    middleTextStyle: TextStyles.regular14_150(context),
     radius: 15,
-    textCancel: 'إلغاء',
-    cancelTextColor: Get.isDarkMode ? AppColors.white : AppColors.black,
-    textConfirm: 'حذف',
-    confirmTextColor: AppColors.white,
     confirm: ElevatedButton(
       onPressed: () {
         onConfirm();
-        Get.back(); // لإغلاق الديالوج بعد التأكيد
+        Get.back;
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.red,
@@ -36,11 +24,18 @@ void showDeleteConfirmationDialog({
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      child: Text('حذف'),
+      child: Text(
+        "Delete".tr,
+        style: TextStyle(color: AppColors.white),
+      ),
     ),
     cancel: TextButton(
-      onPressed: () => Get.back(),
-      child: Text('إلغاء'),
+      onPressed: Get.back,
+      child: Text(
+        "Cancel".tr,
+        style: TextStyle(
+            color: Get.isDarkMode ? AppColors.white : AppColors.black),
+      ),
     ),
   );
 }

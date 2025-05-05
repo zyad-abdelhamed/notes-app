@@ -10,5 +10,5 @@ abstract class BaseNoteRepo {
   Future<Either<Failure, Unit>> addNote(NotePrameter notePrameter);
   Future<Either<Failure, Unit>> updateNote(NotePrameter notePrameter);
   Future<Either<Failure, Unit>> deleteNote(NotePrameter notePrameter);
-  Future<Either<Failure, Unit>> toggleFavorite(bool value, dynamic id);
+  Future<Either<Failure, Unit>> toggleFavorite(int value, dynamic id);
 }

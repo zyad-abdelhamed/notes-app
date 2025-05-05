@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:notes_app/core/theme/app_colors.dart';
 import 'package:notes_app/core/theme/text_styles.dart';
+import 'package:notes_app/featuers/notes/domain/entities/note.dart';
+import 'package:notes_app/featuers/notes/presentation/view/pages/note_page.dart';
 
 class HomeNoteWidget extends StatelessWidget {
-  const HomeNoteWidget({super.key, required this.title, required this.descreption});
-  final String title;
-  final String descreption;
+  const HomeNoteWidget({super.key, required this.note});
+  final Note note;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20), color: AppColors.blueGrey),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            title,
-            style: TextStyles.bold23(context: context),
-          ),
-          Text(
-            descreption,
-            maxLines: 15,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyles.regular14_150(context),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => Get.to(NotePage(note: note)),
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20), color: AppColors.blueGrey),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              note.title,
+              style: TextStyles.bold23(context: context),
+            ),
+            Text(
+              note.descreption,
+              maxLines: 15,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyles.regular14_150(context),
+            ),
+          ],
+        ),
       ),
     );
   }

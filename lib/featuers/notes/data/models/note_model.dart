@@ -2,7 +2,8 @@ import 'package:notes_app/featuers/notes/domain/entities/note.dart';
 
 class NoteModel extends Note {
   const NoteModel(
-      {required super.title,
+      {required super.id,
+        required super.title,
       required super.descreption,
       required super.createdAt,
       required super.lastUpdate,
@@ -10,6 +11,7 @@ class NoteModel extends Note {
 
   factory NoteModel.fromDataBase(Map<String, dynamic> data) {
     return NoteModel(
+      id: data['id'],
         title: data['title'],
         descreption: data['content'],
         createdAt: data['createdAt'],

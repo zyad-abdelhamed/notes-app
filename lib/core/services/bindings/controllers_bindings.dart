@@ -4,12 +4,16 @@ import 'package:notes_app/featuers/notes/presentation/controller/featured_notes_
 import 'package:notes_app/featuers/notes/presentation/controller/note_category_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/notes_by_category_conroller.dart';
+import 'package:notes_app/featuers/notes/presentation/controller/notes_search_controller.dart';
+import 'package:notes_app/featuers/splash_screen/presentation/controller/splash_screen_controller.dart';
 
 class ControllersBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<NoteController>(() => NoteController(baseNoteRepo: sl()),
+    Get.lazyPut<SplashScreenController>(() => SplashScreenController(),
         fenix: true);
+    Get.lazyPut<NoteController>(() => NoteController(baseNoteRepo: sl()),
+        fenix: true);   
     Get.lazyPut<NoteCategoryController>(
         () => NoteCategoryController(baseNoteCategoryRepo: sl()),
         fenix: true);
@@ -17,5 +21,7 @@ class ControllersBindings extends Bindings {
         fenix: true);
     Get.lazyPut<FeaturedNotesController>(() => FeaturedNotesController(sl()),
         fenix: true);
+    Get.lazyPut<NotesSearchController>(() => NotesSearchController(),
+        fenix: true);    
   }
 }

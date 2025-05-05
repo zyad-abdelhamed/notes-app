@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:notes_app/core/constants/routes_constants.dart';
 import 'package:notes_app/core/services/enums/request_state_enum.dart';
 import 'package:notes_app/featuers/notes/data/models/note_prameter.dart';
 import 'package:notes_app/featuers/notes/domain/entities/note.dart';
@@ -13,18 +14,16 @@ class NoteController extends GetxController {
   //dropdownbutton
   String selectedValue = '';
 
-  bool get isValid => selectedValue.isNotEmpty;
-
   void changeValue(String value) {
     selectedValue = value;
-    update(); // تحديث الواجهة
+    update();
   }
 
   // Form Controllers
-  TextEditingController addTitleTextFieldController = TextEditingController();
-  TextEditingController addDescriptionTextFieldController =
+  final TextEditingController noteTitleTextFieldController = TextEditingController();
+  final TextEditingController noteDescriptionTextFieldController =
       TextEditingController();
-  GlobalKey<FormState> addFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> addFormKey = GlobalKey<FormState>();
 
   // Notes Data
   List<Note> notes = [];
@@ -53,8 +52,8 @@ class NoteController extends GetxController {
 
       final result = await baseNoteRepo.addNote(NotePrameter(
           categoryId: categoryId,
-          title: addTitleTextFieldController.text,
-          descreption: addDescriptionTextFieldController.text));
+          title: noteTitleTextFieldController.text,
+          descreption: noteDescriptionTextFieldController.text));
       result.fold(
         (l) {
           addState = RequestStateEnum.failed;
@@ -62,7 +61,7 @@ class NoteController extends GetxController {
         },
         (_) {
           addState = RequestStateEnum.success;
-          Get.back();
+          Get.offAndToNamed(RoutesConstants.homePageRouteName);
         },
       );
       update();
@@ -121,6 +120,17 @@ class NoteController extends GetxController {
       },
     );
   }
+  @override
+  void onClose() {
+    clearTextEditingControllers();
+    super.onClose();
+  }
+
+  void clearTextEditingControllers() {
+    noteTitleTextFieldController.clear();
+    noteDescriptionTextFieldController.clear();
+  }
+
   @override
   void onInit() {
     getAllNotes();

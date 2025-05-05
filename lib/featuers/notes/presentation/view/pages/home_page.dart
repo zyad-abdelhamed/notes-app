@@ -13,46 +13,48 @@ class HomePage extends StatelessWidget {
   static const int _crossAxisCount = 2;
   @override
   Widget build(BuildContext context) {
-    return
-      Scaffold(
-        appBar: AppBar(
-          title: Text("hometitel".tr),
-          bottom: PreferredSize(
-              preferredSize: Size(double.infinity, 30), child: SizedBox()),
-          actions: appBarActions(context),
-        ),
-        body: Padding(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("hometitel".tr),
+        bottom: PreferredSize(
+            preferredSize: Size(double.infinity, 30), child: SizedBox()),
+        actions: appBarActions(context),
+      ),
+      body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: GetBuilder<NoteController>(builder: (controller) {
-            return getWidgetDependingOnReuestState(requestStateEnum: controller.allNotesState, widgetIncaseSuccess:  StaggeredGrid.count(
-            crossAxisCount: _crossAxisCount,
-            mainAxisSpacing: _spacing,
-            crossAxisSpacing: _spacing,
-            children: List.generate(
-              controller.notes.length,
-              (index) => HomeNoteWidget(
-                  title: controller.notes[index].title, descreption:controller.notes[index].descreption, ),
-            ),
+          child: GetBuilder<NoteController>(
+            builder: (controller) {
+              return getWidgetDependingOnReuestState(
+                  requestStateEnum: controller.allNotesState,
+                  widgetIncaseSuccess: StaggeredGrid.count(
+                    crossAxisCount: _crossAxisCount,
+                    mainAxisSpacing: _spacing,
+                    crossAxisSpacing: _spacing,
+                    children: List.generate(
+                      controller.notes.length,
+                      (index) => HomeNoteWidget(
+                        note: controller.notes[index],
+                      ),
+                    ),
+                  ),
+                  erorrMessage: controller.allNotesError);
+            },
+          )),
+      floatingActionButton: Column(
+        spacing: 5,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          GestureDetector(
+              onTap: () {
+                Get.toNamed(RoutesConstants.foldersPageRouteName);
+              },
+              child: const Icon(Icons.folder_copy, size: 40)),
+          FloatingActionButton(
+            onPressed: () => Get.toNamed(RoutesConstants.addNotePageRouteName),
+            child: const Icon(Icons.add),
           ),
-         erorrMessage: controller.allNotesError);
-          },)),
-        floatingActionButton: Column(
-          spacing: 5,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            GestureDetector(
-                onTap: () {
-                  Get.toNamed(RoutesConstants.foldersPageRouteName);
-                  //todo pop function
-                },
-                child: Icon(Icons.folder_copy, size: 40)),
-            FloatingActionButton(
-              onPressed: () =>
-                  Get.toNamed(RoutesConstants.addNotePageRouteName),
-              child: Icon(Icons.add),
-            ),
-          ],
-        ),
-      );
+        ],
+      ),
+    );
   }
 }
