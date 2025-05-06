@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:notes_app/core/constants/routes_constants.dart';
 import 'package:notes_app/core/services/enums/request_state_enum.dart';
 import 'package:notes_app/featuers/notes/data/models/note_prameter.dart';
 import 'package:notes_app/featuers/notes/domain/entities/note.dart';
 import 'package:notes_app/featuers/notes/domain/repos/base_note_repo.dart';
+import 'package:notes_app/featuers/notes/presentation/controller/get_all_notes.dart';
 
 class NoteController extends GetxController {
   NoteController({required this.baseNoteRepo});
@@ -33,9 +33,6 @@ class NoteController extends GetxController {
     return soli.value;
   }
 
-  // Notes Data
-  List<Note> notes = [];
-
   // States and Errors
   RequestStateEnum addState = RequestStateEnum.loading;
   String addError = '';
@@ -46,8 +43,7 @@ class NoteController extends GetxController {
   RequestStateEnum deleteState = RequestStateEnum.loading;
   String deleteError = '';
 
-  RequestStateEnum allNotesState = RequestStateEnum.loading;
-  String allNotesError = '';
+ 
 
   //========================
   // CRUD OPERATIONS
@@ -70,7 +66,9 @@ class NoteController extends GetxController {
         },
         (_) {
           addState = RequestStateEnum.success;
-          Get.offAndToNamed(RoutesConstants.homePageRouteName);
+          Get.back();
+          Get.find<GetAllNotesController>().getAllNotes();
+          clearTextEditingControllers();
         },
       );
       update();
@@ -116,39 +114,14 @@ class NoteController extends GetxController {
     update();
   }
 
-  Future<void> getAllNotes() async {
-    allNotesState = RequestStateEnum.loading;
-    update();
+ 
 
-    final result = await baseNoteRepo.getAllNotes();
-    result.fold(
-      (l) {
-        allNotesState = RequestStateEnum.failed;
-        allNotesError = l.message;
-        update();
-      },
-      (r) {
-        notes = r;
-        allNotesState = RequestStateEnum.success;
-        update();
-      },
-    );
-  }
-
-  @override
-  void onClose() {
-    clearTextEditingControllers();
-    super.onClose();
-  }
+ 
 
   void clearTextEditingControllers() {
     noteTitleTextFieldController.clear();
     noteDescriptionTextFieldController.clear();
   }
 
-  @override
-  void onReady() {
-    getAllNotes();
-    super.onReady();
-  }
+ 
 }

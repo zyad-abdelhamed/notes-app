@@ -8,9 +8,17 @@ class AddNotePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   final NoteController controller = Get.find();
+    final NoteController controller = Get.find();
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
+          onPressed: () {
+            Get.back();
+controller.clearTextEditingControllers();          },
+        ),
         title: Text(
           "AddNote".tr,
         ),
@@ -18,16 +26,14 @@ class AddNotePage extends StatelessWidget {
           IconButton(
               onPressed: () {
                 controller.addNote();
+                
               },
               icon: const Icon(
                 Icons.done,
               ))
         ],
       ),
-      body: NoteForm(
-       
-       
-      ),
+      body: NoteForm(),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/core/helper_function/get_widget_depending_on_reuest_state.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_category_controller.dart';
+import 'package:notes_app/featuers/notes/presentation/controller/note_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/add_folder_button.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/folder_widget.dart';
 
@@ -12,6 +13,16 @@ class FoldersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
+          onPressed: () {
+            Get.back();
+            Get.delete<NoteController>();
+
+          },
+        ),
         title: Text("AllFolders".tr),
         bottom: PreferredSize(preferredSize: Size(double.infinity, 30), child:SizedBox() ),
       ),

@@ -4,7 +4,7 @@ import 'package:notes_app/core/helper_function/get_init_route.dart';
 import 'package:notes_app/core/helper_function/get_pages.dart';
 import 'package:notes_app/core/localization/localization_controller.dart';
 import 'package:notes_app/core/services/bindings/controllers_bindings.dart';
-import 'package:notes_app/core/theme/light_theme_data.dart';
+import 'package:notes_app/core/theme/dark_theme_data.dart';
 
 class NotesApp extends StatelessWidget {
   const NotesApp({super.key});
@@ -13,7 +13,7 @@ class NotesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: getlighttheme,
+      theme: getdarktheme,
       translations: Localization(),
       locale: LocalizationController.currentLanguage,
       initialBinding: ControllersBindings(),

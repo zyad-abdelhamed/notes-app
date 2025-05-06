@@ -17,6 +17,15 @@ class NotePage extends StatelessWidget {
     final NoteController controller = Get.find();
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
+          onPressed: () {
+            Get.back();
+            controller.clearTextEditingControllers();
+          },
+        ),
         actions: [
           Obx(
             () => Visibility(
@@ -24,6 +33,7 @@ class NotePage extends StatelessWidget {
               child: IconButton(
                   onPressed: () {
                     controller.updateNote(note: note);
+                    controller.clearTextEditingControllers();
                   },
                   icon: const Icon(
                     Icons.done,

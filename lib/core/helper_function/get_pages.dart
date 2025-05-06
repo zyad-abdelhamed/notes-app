@@ -21,7 +21,7 @@ List<GetPage<dynamic>>? get getPages => <GetPage<dynamic>>[
       ),
       GetPage(
           name: RoutesConstants.homePageRouteName,
-          page: () => const HomePage(),
+          page: () =>const  HomePage(),
           transitionDuration: ViewConstants.longDuration),
       GetPage(
           name: RoutesConstants.addNotePageRouteName,
