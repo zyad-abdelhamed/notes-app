@@ -5,6 +5,7 @@ import 'package:notes_app/featuers/notes/presentation/controller/get_all_notes.d
 class NotesSearchController extends GetxController {
   List<Note> notes = [];
 
+ 
   void search({required String word}) {
     final GetAllNotesController noteController = Get.find();
     notes = noteController.notes
