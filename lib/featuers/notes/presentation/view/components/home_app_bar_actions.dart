@@ -1,8 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/core/constants/routes_constants.dart';
 import 'package:notes_app/core/constants/view_constants.dart';
-import 'package:notes_app/core/theme/app_colors.dart';
 import 'package:notes_app/core/theme/dark_theme_data.dart';
 import 'package:notes_app/core/theme/light_theme_data.dart';
 import 'package:notes_app/core/theme/text_styles.dart';
@@ -18,9 +18,12 @@ List<Widget> appBarActions(BuildContext context) {
   return [
     IconButton(
         onPressed: () {
-          Get.toNamed(RoutesConstants.featuredNotesPageRouteName);
+          Get.toNamed(RoutesConstants.favoriteNotesPageRouteName);
         },
-        icon: Icon(Icons.star,color: AppColors.featuredIconColor)),
+        icon: Icon(
+          Icons.favorite,
+          color: Colors.red,
+        )),
     IconButton(
         onPressed: () {
           Get.toNamed(RoutesConstants.searchScreenPageRouteName);
@@ -42,14 +45,13 @@ List<Widget> appBarActions(BuildContext context) {
               languagesStrings.length,
               (index) => TextButton(
                   onPressed: () {
-                    
                     language = languagesStrings[index];
-                    if(language == 'English'){
+                    if (language == 'English') {
                       Get.updateLocale(Locale('en'));
-                    }else if(language == 'العربيه'){
+                    } else if (language == 'العربيه') {
                       Get.updateLocale(Locale('ar'));
                     }
-                   Get.back();
+                    Get.back();
                   },
                   child: Text(languagesStrings[index],
                       style: TextStyles.bold23(context: context)

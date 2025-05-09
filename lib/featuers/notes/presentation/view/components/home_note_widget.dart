@@ -4,24 +4,19 @@ import 'package:notes_app/core/theme/app_colors.dart';
 import 'package:notes_app/core/theme/text_styles.dart';
 import 'package:notes_app/featuers/notes/domain/entities/note.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_controller.dart';
-import 'package:notes_app/featuers/notes/presentation/view/pages/note_page.dart';
 
 class HomeNoteWidget extends StatelessWidget {
-  const HomeNoteWidget({super.key, required this.note, });
+  const HomeNoteWidget({
+    super.key,
+    required this.note,
+  });
   final Note note;
 
   @override
   Widget build(BuildContext context) {
-    NoteController noteController = Get.find();
+    final NoteController noteController = Get.find();
     return GestureDetector(
-      onTap: () {
-        noteController.noteTitleTextFieldController.text = note.title;
-        noteController.noteDescriptionTextFieldController.text = note.descreption;
-        
-         Get.to(NotePage(note: note,));
-      
-      },
-        
+      onTap: () => noteController.goToNotePage(note),
       child: Container(
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/core/theme/app_colors.dart';
 import 'package:notes_app/core/theme/text_styles.dart';
-import 'package:notes_app/featuers/notes/presentation/view/components/add_folder_functionality.dart';
+import 'package:notes_app/featuers/notes/presentation/controller/note_category_controller.dart';
 
 class AddFolderButton extends StatelessWidget {
   const AddFolderButton({
@@ -11,11 +11,8 @@ class AddFolderButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return GestureDetector(
-      onTap: () {
-        addFolderFunctionality(context);
-      },
+      onTap: () => Get.find<NoteCategoryController>().addCategory(context),
       child: Container(
         padding: EdgeInsets.all(15.0),
         decoration: BoxDecoration(

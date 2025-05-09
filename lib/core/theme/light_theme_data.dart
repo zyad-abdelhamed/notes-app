@@ -4,10 +4,8 @@ import 'package:notes_app/core/theme/app_colors.dart';
 ThemeData get getlighttheme {
   return ThemeData(
     brightness: Brightness.light,
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.transparent,
-      elevation: 0.0
-    ),
+    appBarTheme:
+        AppBarTheme(backgroundColor: Colors.transparent, elevation: 0.0),
     tabBarTheme: TabBarThemeData(
         tabAlignment: TabAlignment.center,
         indicatorColor: AppColors.lightModePrimaryColor,
@@ -22,6 +20,8 @@ ThemeData get getlighttheme {
         shape: CircleBorder(),
         iconSize: 40),
     popupMenuTheme:
-        PopupMenuThemeData(color: Colors.white, iconColor: Colors.grey),    
+        PopupMenuThemeData(color: Colors.white, iconColor: Colors.grey),
+    progressIndicatorTheme:
+        ProgressIndicatorThemeData(color: AppColors.lightModePrimaryColor),
   );
 }

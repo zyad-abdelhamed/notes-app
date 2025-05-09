@@ -17,7 +17,8 @@ class AddNotePage extends StatelessWidget {
           ),
           onPressed: () {
             Get.back();
-controller.clearTextEditingControllers();          },
+            controller.clearTextEditingControllers();
+          },
         ),
         title: Text(
           "AddNote".tr,
@@ -26,7 +27,6 @@ controller.clearTextEditingControllers();          },
           IconButton(
               onPressed: () {
                 controller.addNote();
-                
               },
               icon: const Icon(
                 Icons.done,

@@ -7,7 +7,7 @@ class NoteModel extends Note {
       required super.descreption,
       required super.createdAt,
       required super.lastUpdate,
-      required super.isFeatured,
+      required super.isFavorite,
       required super.categoryId});
 
   factory NoteModel.fromDataBase(Map<String, dynamic> data) {
@@ -17,7 +17,7 @@ class NoteModel extends Note {
         descreption: data['content'],
         createdAt: data['createdAt'],
         lastUpdate: data['updatedAt'],
-        isFeatured: data['isFavorite'] == 0 ? false : true,
+        isFavorite: data['isFavorite'] == 0 ? false : true,
         categoryId: data['categoryId']);
   }
 }

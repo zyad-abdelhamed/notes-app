@@ -20,6 +20,9 @@ class SearchPage extends StatelessWidget {
           height: textFieldHight,
           child: TextField(
             onChanged: (value) => notesSearchController.search(word: value),
+            cursorColor: Get.isDarkMode
+                ? AppColors.darkModePrimaryColor
+                : AppColors.lightModePrimaryColor,
             decoration: InputDecoration(
               hintFadeDuration: ViewConstants.mediumDuration,
               hintText: "SearchHint".tr,
@@ -39,7 +42,11 @@ class SearchPage extends StatelessWidget {
               ? ListView.builder(
                   itemCount: controller.notes.length,
                   itemBuilder: (context, index) {
-                    return NoteWidget(note: controller.notes[index]);
+                    return NoteWidget(
+                        note: controller.notes.elementAt(index),
+                        ifRightWhenDelete: () {
+                          controller.deleteNote(index);
+                        });
                   },
                 )
               : const SizedBox();

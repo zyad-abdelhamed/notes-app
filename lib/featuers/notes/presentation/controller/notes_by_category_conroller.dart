@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:notes_app/core/services/enums/request_state_enum.dart';
+import 'package:notes_app/core/utils/enums/request_state_enum.dart';
 import 'package:notes_app/featuers/notes/domain/entities/note.dart';
 import 'package:notes_app/featuers/notes/domain/repos/base_note_repo.dart';
 

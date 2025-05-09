@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/core/helper_function/get_widget_depending_on_reuest_state.dart';
+import 'package:notes_app/core/widgets/empty_list_widget.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_category_controller.dart';
-import 'package:notes_app/featuers/notes/presentation/controller/note_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/add_folder_button.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/folder_widget.dart';
 
@@ -13,33 +13,37 @@ class FoldersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-          ),
-          onPressed: () {
-            Get.back();
-            Get.delete<NoteController>();
-
-          },
-        ),
         title: Text("AllFolders".tr),
-        bottom: PreferredSize(preferredSize: Size(double.infinity, 30), child:SizedBox() ),
+        bottom: PreferredSize(
+            preferredSize: Size(double.infinity, 30), child: SizedBox()),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child:GetBuilder<NoteCategoryController>(builder: (controller) {
-         return  getWidgetDependingOnReuestState(requestStateEnum: controller.fetchState, widgetIncaseSuccess: GridView.builder(
-          itemCount: controller.categories.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: spacing,
-              mainAxisSpacing: spacing),
-          itemBuilder: (context, index) => FolderWidget(name:controller.categories[index].categoryName , id: index,),
-        ), erorrMessage: controller.errorMessage);
-        },)
-      ),
-
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: GetBuilder<NoteCategoryController>(
+            builder: (controller) {
+              return controller.categories.isNotEmpty
+                  ? getWidgetDependingOnReuestState(
+                      requestStateEnum: controller.fetchState,
+                      widgetIncaseSuccess: GridView.builder(
+                        itemCount: controller.categories.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: spacing,
+                            mainAxisSpacing: spacing),
+                        itemBuilder: (context, index) => FolderWidget(
+                          name: controller.categories[index].categoryName,
+                          index: index,
+                        ),
+                      ),
+                      erorrMessage: controller.errorMessage)
+                  : Center(
+                      child: EmpetyListWidget(
+                          buttonFunction: () => controller.addCategory(context),
+                          text: "there is no folders".tr,
+                          buttonText: "add folder".tr),
+                    );
+            },
+          )),
       floatingActionButton: AddFolderButton(),
     );
   }

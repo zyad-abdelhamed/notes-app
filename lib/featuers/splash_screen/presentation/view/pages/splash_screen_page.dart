@@ -12,6 +12,7 @@ class SplashScreenPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
+          spacing: 5.0,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
            Image.asset('assets/notes.png',width: 180,height: 180,),

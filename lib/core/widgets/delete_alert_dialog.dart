@@ -14,10 +14,7 @@ void showDeleteConfirmationDialog(
     middleTextStyle: TextStyles.regular14_150(context),
     radius: 15,
     confirm: ElevatedButton(
-      onPressed: () {
-        onConfirm();
-        Get.back;
-      },
+      onPressed: onConfirm,
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.red,
         shape: RoundedRectangleBorder(
