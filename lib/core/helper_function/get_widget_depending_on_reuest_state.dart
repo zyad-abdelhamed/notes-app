@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/core/services/enums/request_state_enum.dart';
+import 'package:notes_app/core/utils/enums/request_state_enum.dart';
 import 'package:notes_app/core/widgets/erorr_widget.dart';
 
 
@@ -13,6 +13,6 @@ Widget getWidgetDependingOnReuestState(
     case RequestStateEnum.failed:
       return ErorrWidget(message: erorrMessage!);
     case RequestStateEnum.loading:
-      return CircularProgressIndicator();
+      return Center(child: CircularProgressIndicator());
   }
 }

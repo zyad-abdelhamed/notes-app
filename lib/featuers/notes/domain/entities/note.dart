@@ -1,10 +1,8 @@
-import 'package:equatable/equatable.dart';
-
-class Note extends Equatable {
+class Note {
   final dynamic id, categoryId;
   final String title, descreption, createdAt;
   final String? lastUpdate;
-  final bool isFeatured;
+  final bool isFavorite;
   const Note(
       {required this.categoryId,
       required this.id,
@@ -12,8 +10,5 @@ class Note extends Equatable {
       required this.descreption,
       required this.createdAt,
       required this.lastUpdate,
-      required this.isFeatured});
-  @override
-  List<Object?> get props =>
-      [title, descreption, createdAt, lastUpdate, isFeatured, id, categoryId];
+      required this.isFavorite});
 }

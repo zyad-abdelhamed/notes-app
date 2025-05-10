@@ -2,21 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/core/theme/app_colors.dart';
 import 'package:notes_app/core/theme/text_styles.dart';
-import 'package:notes_app/core/widgets/delete_alert_dialog.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_category_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/notes_by_category_conroller.dart';
-import 'package:notes_app/featuers/notes/presentation/view/components/app_text_field.dart';
-import 'package:notes_app/featuers/notes/presentation/view/components/custom_alert_dialog.dart';
 import 'package:notes_app/featuers/notes/presentation/view/pages/category_notes_page.dart';
 
 class FolderWidget extends StatelessWidget {
   const FolderWidget({
     super.key,
     required this.name,
-    required this.id,
+    required this.index,
   });
   final String name;
-  final int id;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +22,8 @@ class FolderWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Get.to(CategoryNotesPage(categoryId: id));
-        noteController.getNotesByCategory(id);
+        Get.to(CategoryNotesPage(categoryId: index, appBarTitle: name));
+        noteController.getNotesByCategory(index);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -43,7 +40,6 @@ class FolderWidget extends StatelessWidget {
                     Icons.folder,
                     size: 80,
                   ),
-                  const SizedBox(height: 10),
                   Text(
                     name,
                     textAlign: TextAlign.center,
@@ -61,33 +57,9 @@ class FolderWidget extends StatelessWidget {
                 ),
                 onSelected: (value) {
                   if (value == 'update') {
-                    controller.categoryNameController.text = name;
-
-                    showDialog(
-                        context: context,
-                        builder: (context) => CustomAlertDialog(
-                            contentWidget: (context) => Form(
-                                  key: controller.categoryFormKey,
-                                  child: appTextField(
-                                      context: context,
-                                      titleHintText: '',
-                                      hintStyle: TextStyles.semiBold16(
-                                          context: context),
-                                      controller:
-                                          controller.categoryNameController,
-                                      maxLines: 2,
-                                      maxLength: 31),
-                                ),
-                            onTap: () {
-                              controller.updateCategory(
-                                  id, controller.categoryNameController.text);
-                            },
-                            buttonText: 'update'.tr,
-                            title: 'update category'));
+                    controller.updateCategory(context, index, name: name);
                   } else if (value == 'delete') {
-                    showDeleteConfirmationDialog(context,
-                      onConfirm: () => controller.deleteCategory(id),
-                    );
+                    controller.deleteCategory(context, index);
                   }
                 },
                 itemBuilder: (BuildContext context) => [
@@ -108,7 +80,7 @@ class FolderWidget extends StatelessWidget {
                     value: 'delete',
                     child: Center(
                       child: Text(
-                        'delete'.tr,
+                        "Delete".tr,
                         style: TextStyle(
                           color: Get.isDarkMode
                               ? AppColors.white

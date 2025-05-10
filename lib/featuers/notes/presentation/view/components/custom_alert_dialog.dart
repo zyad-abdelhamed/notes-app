@@ -10,6 +10,7 @@ class CustomAlertDialog extends StatelessWidget {
       required this.onTap,
       required this.buttonText,
       required this.title});
+      
   final String title, buttonText;
   final WidgetBuilder contentWidget;
   final VoidCallback onTap;
@@ -20,8 +21,7 @@ class CustomAlertDialog extends StatelessWidget {
     final double width = context.width * .65;
 
     return GestureDetector(
-      onTap:Get.back,
-
+      onTap: Get.back,
       child: Scaffold(
         backgroundColor: AppColors.grey.withValues(alpha: .2),
         body: Center(
@@ -65,7 +65,9 @@ class CustomAlertDialog extends StatelessWidget {
 
   BoxDecoration get _boxDecorationToSubContainer {
     return BoxDecoration(
-        color: AppColors.darkModePrimaryColor,
+        color: Get.isDarkMode
+            ? AppColors.darkModePrimaryColor
+            : AppColors.lightModePrimaryColor,
         borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(borderRadius),
             bottomRight: Radius.circular(borderRadius)));

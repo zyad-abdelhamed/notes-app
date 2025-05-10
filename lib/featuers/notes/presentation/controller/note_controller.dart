@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:notes_app/core/services/enums/request_state_enum.dart';
+import 'package:notes_app/core/widgets/delete_alert_dialog.dart';
 import 'package:notes_app/featuers/notes/data/models/note_prameter.dart';
 import 'package:notes_app/featuers/notes/domain/entities/note.dart';
 import 'package:notes_app/featuers/notes/domain/repos/base_note_repo.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/get_all_notes.dart';
+import 'package:notes_app/featuers/notes/presentation/view/pages/note_page.dart';
 
 class NoteController extends GetxController {
   NoteController({required this.baseNoteRepo});
@@ -13,7 +14,6 @@ class NoteController extends GetxController {
   int? categoryId;
   //dropdownbutton
   String selectedValue = '';
-
   void changeValue(String value) {
     selectedValue = value;
     update();
@@ -28,44 +28,21 @@ class NoteController extends GetxController {
 
   bool isEditing(Note note) {
     soli.value = (noteTitleTextFieldController.text != note.title ||
-        noteDescriptionTextFieldController.text != note.descreption);
-
+        noteDescriptionTextFieldController.text != note.descreption 
+        );
     return soli.value;
   }
 
-  // States and Errors
-  RequestStateEnum addState = RequestStateEnum.loading;
-  String addError = '';
-
-  RequestStateEnum updateState = RequestStateEnum.loading;
-  String updateError = '';
-
-  RequestStateEnum deleteState = RequestStateEnum.loading;
-  String deleteError = '';
-
- 
-
-  //========================
   // CRUD OPERATIONS
-  //========================
-
-  Future<void> addNote() async {
+  void addNote() async {
     if (addFormKey.currentState!.validate() && selectedValue.isNotEmpty) {
-      addState = RequestStateEnum.loading;
-      update();
-
       final result = await baseNoteRepo.addNote(NotePrameter(
           categoryId: categoryId,
           title: noteTitleTextFieldController.text,
           descreption: noteDescriptionTextFieldController.text));
       result.fold(
-        (l) {
-          addState = RequestStateEnum.failed;
-          addError = l.message;
-          print(l.message);
-        },
+        (l) {},
         (_) {
-          addState = RequestStateEnum.success;
           Get.back();
           Get.find<GetAllNotesController>().getAllNotes();
           clearTextEditingControllers();
@@ -75,53 +52,47 @@ class NoteController extends GetxController {
     }
   }
 
-  Future<void> updateNote({required Note note}) async {
-    updateState = RequestStateEnum.loading;
-    update();
-
-    final result = await baseNoteRepo.updateNote(NotePrameter(id:note.id  , categoryId:categoryId , 
-          title: noteTitleTextFieldController.text,
-          descreption: noteDescriptionTextFieldController.text ));
+  void updateNote({required Note note}) async {
+    final result = await baseNoteRepo.updateNote(NotePrameter(
+        id: note.id,
+        categoryId: categoryId,
+        title: noteTitleTextFieldController.text,
+        descreption: noteDescriptionTextFieldController.text));
     result.fold(
-      (l) {
-        updateState = RequestStateEnum.failed;
-        updateError = l.message;
-
-      },
-      (_) {
-        updateState = RequestStateEnum.success;
-        print(note.categoryId );
+      (l) {},
+      (_) async {
         Get.back();
+        Get.find<GetAllNotesController>().getAllNotes();
+        clearTextEditingControllers();
       },
     );
-    update();
   }
 
-  Future<void> deleteNote(NotePrameter param) async {
-    deleteState = RequestStateEnum.loading;
-    update();
+  void deleteNote(BuildContext context,
+      {required Note note, required VoidCallback ifRight}) {
+    showDeleteConfirmationDialog(context, onConfirm: () async {
+      final result = await baseNoteRepo.deleteNote(note.id);
+      result.fold(
+        (l) {},
+        (_) {
+          Get.find<GetAllNotesController>().getAllNotes();
 
-    final result = await baseNoteRepo.deleteNote(param);
-    result.fold(
-      (l) {
-        deleteState = RequestStateEnum.failed;
-        deleteError = l.message;
-      },
-      (_) {
-        deleteState = RequestStateEnum.success;
-      },
-    );
-    update();
+          ifRight();
+        },
+      );
+    });
   }
 
- 
-
- 
-
+  //   ===helper functions===
   void clearTextEditingControllers() {
     noteTitleTextFieldController.clear();
     noteDescriptionTextFieldController.clear();
+    selectedValue = '';
   }
 
- 
+  void goToNotePage(Note note) {
+    noteTitleTextFieldController.text = note.title;
+    noteDescriptionTextFieldController.text = note.descreption;
+    Get.to(NotePage(note: note));
+  }
 }

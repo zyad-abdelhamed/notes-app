@@ -16,39 +16,40 @@ class NotePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final NoteController controller = Get.find();
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-          ),
-          onPressed: () {
-            Get.back();
-            controller.clearTextEditingControllers();
-          },
-        ),
-        actions: [
-          Obx(
-            () => Visibility(
-              visible: controller.isEditing(note),
-              child: IconButton(
-                  onPressed: () {
-                    controller.updateNote(note: note);
-                    controller.clearTextEditingControllers();
-                  },
-                  icon: const Icon(
-                    Icons.done,
-                  )),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
             ),
-          )
-        ],
-      ),
-      body: NoteForm(
-        note: note,
-        onChanged: (value) => controller.isEditing(note),
-      ),
-      bottomNavigationBar: NoteInfoWidget(
-        note: note,
-      ),
-    );
+            onPressed: () {
+              Get.back();
+              controller.clearTextEditingControllers();
+            },
+          ),
+          actions: [
+            Obx(
+              () => Visibility(
+                visible: controller.isEditing(note),
+                child: IconButton(
+                    onPressed: () => controller.updateNote(note: note),
+                    icon: const Icon(
+                      Icons.done,
+                    )),
+              ),
+            )
+          ],
+        ),
+        body: NoteForm(
+            note: note, onChanged: (value) => controller.isEditing(note)),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: NoteInfoWidget(
+              index: 0,
+              note: note,
+              ifRightWhenDelete: () {
+                controller.clearTextEditingControllers();
+                Get.back(closeOverlays: true);
+              }),
+        ));
   }
 }

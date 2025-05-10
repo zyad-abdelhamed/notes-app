@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-class NoteCategory extends Equatable{
+class NoteCategory {
   final int id;
   final String categoryName;
 
@@ -8,7 +6,4 @@ class NoteCategory extends Equatable{
     required this.id,
     required this.categoryName,
   });
-  
-  @override
-  List<Object?> get props => [id,categoryName];
 }

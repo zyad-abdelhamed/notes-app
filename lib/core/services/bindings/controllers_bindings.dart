@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:notes_app/core/services/dependency_injection.dart';
-import 'package:notes_app/featuers/notes/presentation/controller/featured_notes_controller.dart';
+import 'package:notes_app/featuers/notes/presentation/controller/favorite_notes_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/get_all_notes.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_category_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_controller.dart';
@@ -22,7 +22,7 @@ class ControllersBindings extends Bindings {
         fenix: true);
     Get.lazyPut<NotesByCategoryConroller>(() => NotesByCategoryConroller(sl()),
         fenix: true);
-    Get.lazyPut<FeaturedNotesController>(() => FeaturedNotesController(sl()),
+    Get.lazyPut<FavoriteNotesController>(() => FavoriteNotesController(sl()),
         fenix: true);
     Get.lazyPut<NotesSearchController>(() => NotesSearchController(),
         fenix: true);

@@ -9,6 +9,6 @@ abstract class BaseNoteRepo {
   Future<Either<Failure, List<Note>>> getNotesByCategory(dynamic categoryId);
   Future<Either<Failure, Unit>> addNote(NotePrameter notePrameter);
   Future<Either<Failure, Unit>> updateNote(NotePrameter notePrameter);
-  Future<Either<Failure, Unit>> deleteNote(NotePrameter notePrameter);
+  Future<Either<Failure, Unit>> deleteNote(dynamic id);
   Future<Either<Failure, Unit>> toggleFavorite(int value, dynamic id);
 }

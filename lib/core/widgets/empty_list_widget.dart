@@ -7,12 +7,12 @@ import 'package:notes_app/core/theme/text_styles.dart';
 class EmpetyListWidget extends StatelessWidget {
   const EmpetyListWidget(
       {super.key,
-      required this.buttonFunction,
+      this.buttonFunction,
       required this.text,
-      required this.buttonText});
-  final VoidCallback buttonFunction;
+      this.buttonText});
+  final VoidCallback? buttonFunction;
   final String text;
-  final String buttonText;
+  final String? buttonText;
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +30,17 @@ class EmpetyListWidget extends StatelessWidget {
           Text('!',
               style: TextStyles.bold23(context: context)
                   .copyWith(color: AppColors.darkModePrimaryColor)),
-          Text(text, style: TextStyles.regular14_150(context)),
-          OutlinedButton(
-              onPressed: buttonFunction,
-              child: Text(buttonText,
-                  style: TextStyles.semiBold16(context: context).copyWith(
-                      color: Get.isDarkMode
-                          ? AppColors.darkModePrimaryColor
-                          : AppColors.lightModePrimaryColor)))
+          Text(text, style: TextStyles.regular14_150(context),textAlign: TextAlign.center),
+          Visibility(
+            visible: buttonText != null,
+            child: OutlinedButton(
+                onPressed: buttonFunction,
+                child: Text(buttonText?? '',
+                    style: TextStyles.semiBold16(context: context).copyWith(
+                        color: Get.isDarkMode
+                            ? AppColors.darkModePrimaryColor
+                            : AppColors.lightModePrimaryColor))),
+          )
         ],
       ),
     );

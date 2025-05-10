@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:notes_app/core/theme/app_colors.dart';
 
 TextFormField appTextField(
     {required BuildContext context,
@@ -14,11 +16,12 @@ TextFormField appTextField(
       style: style ?? hintStyle,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'this field can not be empty';
+          return "this field can not be empty".tr;
         }
         return null;
       },
-      onChanged:onChanged ,
+      onChanged:onChanged,
+      cursorColor: Get.isDarkMode ? AppColors.darkModePrimaryColor : AppColors.lightModePrimaryColor,
       decoration: InputDecoration(
         hintStyle: hintStyle,
         border: InputBorder.none,
