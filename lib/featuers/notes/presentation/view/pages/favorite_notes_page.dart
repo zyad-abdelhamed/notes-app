@@ -25,25 +25,16 @@ class FavoriteNotesPage extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () => controller.removeFromFavorite(),
-                      child: Stack(
-                        children: [
-                          const Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                            size: 30,
-                          ),
-                          Transform.rotate(
-                              angle: 45,
-                              child: SizedBox(
-                                  height: 30,
-                                  width: 30,
-                                  child: VerticalDivider(thickness: 3)))
-                        ],
-                      ),
+                      child:  Image.asset( "assets/slash.png",width: 30,height: 30,),
                     ),
                     IconButton(
                         onPressed: () => noteController.deleteNote(context,
-                            note: controller.note, ifRight: () {}),
+                            note: controller.note, ifRight: () {
+                              Get.back();
+                              controller.visible = false;
+                              controller.getFavouriteNotes();
+
+                            }),
                         icon: const Icon(CupertinoIcons.delete,
                             color: Colors.grey)),
                   ],
@@ -66,6 +57,7 @@ class FavoriteNotesPage extends StatelessWidget {
                                       controller.favouriteNotes[index],
                                       index),
                               child: NoteWidget(
+                               
                                   favoriteIconVisible: false,
                                   note: controller.favouriteNotes[index],
                                   ifRightWhenDelete: () {})),

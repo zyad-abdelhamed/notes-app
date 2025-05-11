@@ -29,10 +29,8 @@ class NotesDatabaseImplBysqflite implements BaseNotesDataBaseService {
   Future<void> deleteCategory(dynamic id) async {
     final db = await sqfliteClient.database;
 
-    // First, delete all notes in the category
     await db.delete('notes', where: 'categoryId = ?', whereArgs: [id]);
 
-    // Then, delete the category itself
     await db.delete('categories', where: 'id = ?', whereArgs: [id]);
   }
 
@@ -48,7 +46,7 @@ class NotesDatabaseImplBysqflite implements BaseNotesDataBaseService {
       'content': data.descreption,
       'categoryId': data.categoryId,
       'isFavorite': (data.isFeatured) ?? false ? 1 : 0,
-      'createdAt':getCurrentDateTime,
+      'createdAt': getCurrentDateTime,
     });
   }
 
@@ -80,7 +78,7 @@ class NotesDatabaseImplBysqflite implements BaseNotesDataBaseService {
     Map<String, dynamic> values = {
       'title': newData.title,
       'content': newData.descreption,
-      'categoryId': newData.categoryId, 
+      'categoryId': newData.categoryId,
       'updatedAt': getCurrentDateTime,
     };
 

@@ -1,11 +1,22 @@
 {
-    "splashcentertext":"دون ملاحظاتك",
-    "hometitel":"my notes",
-    "searchhint":"search within my notes🔦",
-    "alertdescription":"confirm the deletion process?",
-    "alertaction1":"cancel",
-    "alertaction2":"delete",
-    "addpagetitle":"add note",
-    "titlefieldhint":"the title",
-    "bodyfieldhint":"write..."
-}
+    "update": "تعديل",
+    "add": "إضافة",
+    "hometitel": "ملاحظاتي",
+    "DeviceLanguage": "لغة الجهاز",
+    "AllFolders": "جميع\n  المجلدات",
+    "folder": "مجلد",
+    "AddNote": "إضافة\n  ملاحظه",
+    "Title": "العنوان",
+    "Write": "دون...",
+    "Favorites": "المفضلة",
+    "CreateNewFolder": "إنشاء مجلد جديد",
+    "SearchHint": "البحث ضمن ملاحظاتي",
+    "DeleteConfirmation": "تأكيد الحذف",
+    "AreYouSureYouWantToDeleteThisItem": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
+    "Cancel": "إلغاء",
+    "Delete": "حذف",
+    "createdAt": "تاريخ الانشاء:",
+    "lastUpdate": "آخر تحديث:",
+    "localDataBaseError": "حدث خطأ في قاعدة البيانات المحلية. يرجى المحاولة لاحقًا."
+  }
+  

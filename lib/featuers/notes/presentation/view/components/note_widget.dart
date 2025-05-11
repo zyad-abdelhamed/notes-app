@@ -18,7 +18,6 @@ class NoteWidget extends StatelessWidget {
   final int? index;
   final VoidCallback ifRightWhenDelete;
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

@@ -1,13 +1,22 @@
 {
-    "splashcentertext":"take notes",
-    
-    "hometitel":"My\n  Notes",
-    "searchhint":"search within my notes🔦",
-    "alertdescription":"confirm the deletion process?",
-    "alertaction1":"cancel",
-    "alertaction2":"delete",
-
-    "addpagetitle":"add note",
-    "titlefieldhint":"the title",
-    "bodyfieldhint":"write..."
-}
+    "update": "update",
+    "add": "add",
+    "hometitel": "My\n  Notes",
+    "DeviceLanguage": "device language",
+    "AllFolders": "All\n  folders",
+    "folder": "folder",
+    "AddNote": "Add\n  Note",
+    "Title": "Title",
+    "Write": "write...",
+    "Favorites": "Favorites",
+    "CreateNewFolder": "create new folder",
+    "SearchHint": "search within my notes",
+    "DeleteConfirmation": "Delete Confirmation",
+    "AreYouSureYouWantToDeleteThisItem": "are you sure you want to delete this item?",
+    "Cancel": "cancel",
+    "Delete": "delete",
+    "createdAt": "created At:",
+    "lastUpdate": "last Update:",
+    "localDataBaseError": "An error occurred with the local database. Please try again later."
+  }
+  

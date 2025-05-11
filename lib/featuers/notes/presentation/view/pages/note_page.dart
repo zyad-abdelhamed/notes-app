@@ -8,10 +8,9 @@ import 'package:notes_app/featuers/notes/presentation/view/components/note_widge
 class NotePage extends StatelessWidget {
   const NotePage({
     super.key,
-    required this.note,
+    required this.note, 
   });
   final Note note;
-
   @override
   Widget build(BuildContext context) {
     final NoteController controller = Get.find();

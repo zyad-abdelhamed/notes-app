@@ -18,12 +18,11 @@ class FolderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NoteCategoryController controller = Get.find();
-    final NotesByCategoryConroller noteController = Get.find();
-
+    final NotesByCategoryConroller noteByCategoryController = Get.find();
     return GestureDetector(
       onTap: () {
-        Get.to(CategoryNotesPage(categoryId: index, appBarTitle: name));
-        noteController.getNotesByCategory(index);
+        Get.to(CategoryNotesPage(category:  controller.categories[index], appBarTitle: name));
+        noteByCategoryController.getNotesByCategory(controller.categories[index].id);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -59,7 +58,8 @@ class FolderWidget extends StatelessWidget {
                   if (value == 'update') {
                     controller.updateCategory(context, index, name: name);
                   } else if (value == 'delete') {
-                    controller.deleteCategory(context, index);
+                   
+                    controller.deleteCategory(context, categoryId: controller.categories[index].id);
                   }
                 },
                 itemBuilder: (BuildContext context) => [

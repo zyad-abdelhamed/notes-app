@@ -7,52 +7,59 @@ import 'package:notes_app/featuers/notes/domain/entities/note.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_category_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_controller.dart';
 
-GetBuilder<NoteCategoryController> foldersDropDownButton(BuildContext context,
-    {required Note? note}) {
+GetBuilder<NoteCategoryController> foldersDropDownButton(
+  BuildContext context, {
+  required Note? note,
+}) {
   final NoteController controller = Get.find();
 
   return GetBuilder<NoteCategoryController>(
     builder: (noteCategoryController) {
       const UnderlineInputBorder borderStyle =
           UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey));
+
       return noteCategoryController.categories.isNotEmpty
           ? SizedBox(
               width: context.width * 1 / 3,
               child: DropdownButtonFormField<String>(
                 isExpanded: true,
                 decoration: InputDecoration(
-                    labelText: "folder".tr,
-                    labelStyle: TextStyles.bold23(context: context).copyWith(
-                        color: Get.isDarkMode
-                            ? AppColors.darkModePrimaryColor
-                            : AppColors.lightModePrimaryColor),
-                    border: borderStyle,
-                    enabledBorder: borderStyle,
-                    focusedBorder: borderStyle,
-                    errorBorder: borderStyle,
-                    focusedErrorBorder: borderStyle),
+                  labelText: "folder".tr,
+                  labelStyle: TextStyles.bold23(context: context).copyWith(
+                    color: Get.isDarkMode
+                        ? AppColors.darkModePrimaryColor
+                        : AppColors.lightModePrimaryColor,
+                  ),
+                  border: borderStyle,
+                  enabledBorder: borderStyle,
+                  focusedBorder: borderStyle,
+                  errorBorder: borderStyle,
+                  focusedErrorBorder: borderStyle,
+                ),
                 value: note == null
                     ? controller.selectedValue.isEmpty
                         ? null
                         : controller.selectedValue
                     : noteCategoryController
-                        .categories[note.categoryId].categoryName,
+                        .categories[noteCategoryController.categories
+                            .indexWhere(
+                                (element) => element.id == note.categoryId)]
+                        .categoryName,
                 items: noteCategoryController.categories
-                    .map((e) => e.categoryName)
-                    .toList()
-                    .map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
+                    .map((e) => DropdownMenuItem<String>(
+                          value: e.categoryName,
+                          child: Text(e.categoryName),
+                        ))
+                    .toList(),
                 onChanged: (newValue) {
                   controller.changeValue(newValue!);
                   final index = noteCategoryController.categories.indexWhere(
                     (category) => category.categoryName == newValue,
                   );
-
-                  controller.categoryId = index;
+                  if (index != -1) {
+                    controller.categoryId.value =
+                        noteCategoryController.categories[index].id;
+                  }
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {

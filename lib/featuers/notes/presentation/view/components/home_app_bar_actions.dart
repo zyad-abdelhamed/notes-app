@@ -1,44 +1,46 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/core/constants/routes_constants.dart';
 import 'package:notes_app/core/constants/view_constants.dart';
-import 'package:notes_app/core/theme/dark_theme_data.dart';
-import 'package:notes_app/core/theme/light_theme_data.dart';
 import 'package:notes_app/core/theme/text_styles.dart';
+import 'package:notes_app/core/theme/theme_controller.dart';
 
 List<Widget> appBarActions(BuildContext context) {
+  final ThemeController themeController = Get.find();
   String language;
-  final IconData themeIcon =
-      Get.isDarkMode ? Icons.light_mode : Icons.dark_mode;
+ 
   final List<String> languagesStrings = <String>[
     "DeviceLanguage".tr,
     ...ViewConstants.constantsLanguagesStrings
   ];
+
   return [
     IconButton(
-        onPressed: () {
-          Get.toNamed(RoutesConstants.favoriteNotesPageRouteName);
-        },
-        icon: Icon(
-          Icons.favorite,
-          color: Colors.red,
+      onPressed: () {
+        Get.toNamed(RoutesConstants.favoriteNotesPageRouteName);
+      },
+      icon: const Icon(Icons.favorite, color: Colors.red),
+    ),
+    IconButton(
+      onPressed: () {
+        Get.toNamed(RoutesConstants.searchScreenPageRouteName);
+      },
+      icon: const Icon(Icons.search),
+    ),
+    Obx(() => IconButton(
+          onPressed: () {
+            themeController.changeTheme(
+              themeController.currentThemeMode.value == ThemeMode.dark
+                  ? ThemeMode.light
+                  : ThemeMode.dark,
+            );
+          },
+            
+          icon: Icon(themeController.currentThemeMode.value == ThemeMode.dark
+              ? Icons.dark_mode
+              : Icons.light_mode),
         )),
-    IconButton(
-        onPressed: () {
-          Get.toNamed(RoutesConstants.searchScreenPageRouteName);
-        },
-        icon: Icon(Icons.search)),
-    IconButton(
-        onPressed: () {
-          if (Get.isDarkMode) {
-            Get.changeTheme(getlighttheme);
-          } else {
-            Get.changeTheme(getdarktheme);
-          }
-        },
-        icon: Icon(themeIcon)),
-    IconButton(
+        IconButton(
         onPressed: () {
           Get.bottomSheet(Column(
             children: List.generate(

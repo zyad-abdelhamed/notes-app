@@ -6,13 +6,14 @@ import 'package:notes_app/core/theme/text_styles.dart';
 import 'package:notes_app/core/widgets/delete_alert_dialog.dart';
 import 'package:notes_app/featuers/notes/domain/entities/note_category.dart';
 import 'package:notes_app/featuers/notes/domain/repos/base_note_category_repo.dart';
+import 'package:notes_app/featuers/notes/presentation/controller/get_all_notes.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/app_text_field.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/custom_alert_dialog.dart';
 
 class NoteCategoryController extends GetxController {
   NoteCategoryController({required this.baseNoteCategoryRepo});
   final BaseNoteCategoryRepo baseNoteCategoryRepo;
-
+  final GetAllNotesController getAllNotesController = Get.find();
   // Controllers & Variables
   TextEditingController categoryNameController = TextEditingController();
   GlobalKey<FormState> categoryFormKey = GlobalKey<FormState>();
@@ -109,13 +110,14 @@ class NoteCategoryController extends GetxController {
             title: '${"update".tr} ${"folder".tr}'));
   }
 
-  void deleteCategory(BuildContext context, int index) {
+  void deleteCategory(BuildContext context, {required int categoryId}) {
     showDeleteConfirmationDialog(context, onConfirm: () async {
       final result =
-          await baseNoteCategoryRepo.deleteCategory(categories[index].id);
+          await baseNoteCategoryRepo.deleteCategory(categoryId);
       result.fold(
         (Failure failure) {},
         (_) {
+          getAllNotesController.getAllNotes();
           fetchAllCategories();
           update();
         },
@@ -130,4 +132,5 @@ class NoteCategoryController extends GetxController {
     super.onInit();
     fetchAllCategories();
   }
+ 
 }

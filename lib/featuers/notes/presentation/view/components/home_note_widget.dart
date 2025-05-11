@@ -8,10 +8,9 @@ import 'package:notes_app/featuers/notes/presentation/controller/note_controller
 class HomeNoteWidget extends StatelessWidget {
   const HomeNoteWidget({
     super.key,
-    required this.note,
+    required this.note, 
   });
   final Note note;
-
   @override
   Widget build(BuildContext context) {
     final NoteController noteController = Get.find();

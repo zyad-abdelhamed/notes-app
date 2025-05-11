@@ -4,6 +4,7 @@ import 'package:notes_app/core/helper_function/get_init_route.dart';
 import 'package:notes_app/core/helper_function/get_pages.dart';
 import 'package:notes_app/core/localization/localization_controller.dart';
 import 'package:notes_app/core/services/bindings/controllers_bindings.dart';
+import 'package:notes_app/core/services/dependency_injection.dart';
 import 'package:notes_app/core/theme/light_theme_data.dart';
 
 class NotesApp extends StatelessWidget {
@@ -14,8 +15,8 @@ class NotesApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: getlighttheme,
-      translations: Localization(),
-      locale: LocalizationController.currentLanguage,
+      translations: sl<LocalizationService>(),
+      locale: Get.deviceLocale,
       initialBinding: ControllersBindings(),
       initialRoute: getInitRoute,
       getPages: getPages,

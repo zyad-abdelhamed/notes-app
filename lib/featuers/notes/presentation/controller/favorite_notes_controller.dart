@@ -76,7 +76,7 @@ class FavoriteNotesController extends GetxController {
 
   void showFavoritesPageAppBarActions(id, Note note, int index) {
     noteId = id;
-    note = note;
+    this.note = note;
     selectedIndex = index;
     visible = true;
     update();
