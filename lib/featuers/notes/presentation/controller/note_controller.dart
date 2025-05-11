@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:notes_app/core/widgets/custom_snake_bar.dart';
 import 'package:notes_app/core/widgets/delete_alert_dialog.dart';
 import 'package:notes_app/featuers/notes/data/models/note_prameter.dart';
 import 'package:notes_app/featuers/notes/domain/entities/note.dart';
@@ -23,16 +24,16 @@ class NoteController extends GetxController {
   }
 
   // Form Controllers
-  final TextEditingController noteTitleTextFieldController = TextEditingController();
-  final TextEditingController noteDescriptionTextFieldController = TextEditingController();
+  final TextEditingController noteTitleTextFieldController =
+      TextEditingController();
+  final TextEditingController noteDescriptionTextFieldController =
+      TextEditingController();
   final GlobalKey<FormState> addFormKey = GlobalKey<FormState>();
 
   bool isEditing(Note note) {
-    soli.value = (
-      noteTitleTextFieldController.text != note.title ||
-      noteDescriptionTextFieldController.text != note.descreption ||
-      categoryId.value != note.categoryId
-    );
+    soli.value = (noteTitleTextFieldController.text != note.title ||
+        noteDescriptionTextFieldController.text != note.descreption ||
+        categoryId.value != note.categoryId);
     return soli.value;
   }
 
@@ -45,7 +46,9 @@ class NoteController extends GetxController {
         descreption: noteDescriptionTextFieldController.text,
       ));
       result.fold(
-        (l) {},
+        (l) {
+          errorSnackBar(message: l.message);
+        },
         (_) {
           Get.back();
           Get.find<GetAllNotesController>().getAllNotes();
@@ -64,7 +67,9 @@ class NoteController extends GetxController {
       descreption: noteDescriptionTextFieldController.text,
     ));
     result.fold(
-      (l) {},
+      (l) {
+        errorSnackBar(message: l.message);
+      },
       (_) async {
         Get.back();
         Get.find<GetAllNotesController>().getAllNotes();
@@ -73,23 +78,20 @@ class NoteController extends GetxController {
     );
   }
 
-  void deleteNote(BuildContext context, {required Note note, required VoidCallback ifRight}) {
+  void deleteNote(BuildContext context,
+      {required Note note, required VoidCallback ifRight}) {
     showDeleteConfirmationDialog(context, onConfirm: () async {
       final result = await baseNoteRepo.deleteNote(note.id);
       result.fold(
-        (l) {},
+        (l) {
+          errorSnackBar(message: l.message);
+        },
         (_) {
           Get.find<GetAllNotesController>().getAllNotes();
           ifRight();
         },
       );
     });
-  }
-
-  Future<void> deleteNotesWithCategory({required int count, required List<Note> list}) async {
-    for (int i = 0; i < count; i++) {
-      await baseNoteRepo.deleteNote(list[i].id);
-    }
   }
 
   void clearTextEditingControllers() {
@@ -99,19 +101,19 @@ class NoteController extends GetxController {
     categoryId.value = null;
   }
 
- void goToNotePage(Note note) {
-  categoryId.value = note.categoryId;
-  noteTitleTextFieldController.text = note.title;
-  noteDescriptionTextFieldController.text = note.descreption;
+  void goToNotePage(Note note) {
+    categoryId.value = note.categoryId;
+    noteTitleTextFieldController.text = note.title;
+    noteDescriptionTextFieldController.text = note.descreption;
 
-  final categoryController = Get.find<NoteCategoryController>();
-  final matchedCategory = categoryController.categories.firstWhereOrNull((c) => c.id == note.categoryId);
-  if (matchedCategory != null) {
-    selectedValue = matchedCategory.categoryName;
+    final categoryController = Get.find<NoteCategoryController>();
+    final matchedCategory = categoryController.categories
+        .firstWhereOrNull((c) => c.id == note.categoryId);
+    if (matchedCategory != null) {
+      selectedValue = matchedCategory.categoryName;
+    }
+
+    // قم بإزالة delayed و Get.to مباشرة
+    Get.to(NotePage(note: note));
   }
-
-  // قم بإزالة delayed و Get.to مباشرة
-  Get.to(NotePage(note: note));
-}
-
 }

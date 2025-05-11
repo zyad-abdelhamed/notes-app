@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:notes_app/core/localization/localization_controller.dart';
+import 'package:notes_app/core/services/cache_service.dart';
 import 'package:notes_app/core/services/data_base_service.dart/base_data_base_service.dart';
 import 'package:notes_app/core/services/data_base_service.dart/notes_db_impl_by_sqflite.dart';
 import 'package:notes_app/core/services/data_base_service.dart/sqflite_client.dart';
@@ -20,6 +21,7 @@ class DependencyInjection {
     sl.registerLazySingleton<BaseNoteRepo>(
         () => NoteRepo(baseNotesDataBaseService: sl()));
     ///////////////services
+    sl.registerLazySingleton<BaseCache>(() => CacheImplBySharedPreferences());
     sl.registerLazySingleton<BaseNotesDataBaseService>(
         () => NotesDatabaseImplBysqflite(sqfliteClient: sl()));
     sl.registerLazySingleton<SqfliteClient>(

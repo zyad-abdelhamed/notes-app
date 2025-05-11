@@ -1,3 +1,4 @@
 abstract class CacheConstants {
-  static String getRamadanTableCheckBoxKey({required int index}) => 'CheckBox$index';
+  static const String lang = 'lang';
+  static const String theme = 'theme';
 }

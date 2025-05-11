@@ -3,7 +3,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/core/constants/routes_constants.dart';
 import 'package:notes_app/core/helper_function/get_widget_depending_on_reuest_state.dart';
-import 'package:notes_app/core/widgets/empty_list_widget.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/get_all_notes.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/home_app_bar_actions.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/home_note_widget.dart';
@@ -42,11 +41,7 @@ class HomePage extends StatelessWidget {
                           ),
                         )
                       : Center(
-                        child: EmpetyListWidget(
-                            buttonFunction: () =>
-                                Get.toNamed(RoutesConstants.addNotePageRouteName),
-                            text: "there is no notes".tr,
-                            buttonText: "add note".tr),
+                        child:Text("there is no notes".tr),
                       ),
                   erorrMessage: controller.allNotesError);
             },

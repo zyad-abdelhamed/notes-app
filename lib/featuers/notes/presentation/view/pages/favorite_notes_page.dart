@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/core/helper_function/get_widget_depending_on_reuest_state.dart';
 import 'package:notes_app/core/theme/app_colors.dart';
-import 'package:notes_app/core/widgets/empty_list_widget.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/favorite_notes_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/note_widget.dart';
 
@@ -19,21 +18,25 @@ class FavoriteNotesPage extends StatelessWidget {
             actions: [
               Visibility(
                 visible: controller.visible,
-                maintainState: true,// remove child from widget tree when visible = false
+                maintainState:
+                    true, // remove child from widget tree when visible = false
                 child: Row(
                   spacing: 5,
                   children: [
                     GestureDetector(
                       onTap: () => controller.removeFromFavorite(),
-                      child:  Image.asset( "assets/slash.png",width: 30,height: 30,),
+                      child: Image.asset(
+                        "assets/slash.png",
+                        width: 30,
+                        height: 30,
+                      ),
                     ),
                     IconButton(
                         onPressed: () => noteController.deleteNote(context,
-                            note: controller.note, ifRight: () {
+                                note: controller.note, ifRight: () {
                               Get.back();
                               controller.visible = false;
                               controller.getFavouriteNotes();
-
                             }),
                         icon: const Icon(CupertinoIcons.delete,
                             color: Colors.grey)),
@@ -57,7 +60,6 @@ class FavoriteNotesPage extends StatelessWidget {
                                       controller.favouriteNotes[index],
                                       index),
                               child: NoteWidget(
-                               
                                   favoriteIconVisible: false,
                                   note: controller.favouriteNotes[index],
                                   ifRightWhenDelete: () {})),
@@ -66,7 +68,8 @@ class FavoriteNotesPage extends StatelessWidget {
                                   index == controller.selectedIndex,
                               maintainState: true,
                               child: GestureDetector(
-                                onTap: () => controller.hideFavoritesPageAppBarActions(),
+                                onTap: () =>
+                                    controller.hideFavoritesPageAppBarActions(),
                                 child: SizedBox(
                                     height: 100,
                                     width: double.infinity,
@@ -82,9 +85,7 @@ class FavoriteNotesPage extends StatelessWidget {
                     },
                   ),
                   erorrMessage: controller.favouriteNotesErrorMessage)
-              : Center(
-                  child:
-                      EmpetyListWidget(text: "there is no favorite notes".tr)));
+              : Center(child: Text("there is no favorite notes".tr)));
     });
   }
 }

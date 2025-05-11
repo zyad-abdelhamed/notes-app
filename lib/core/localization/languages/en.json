@@ -17,6 +17,14 @@
     "Delete": "delete",
     "createdAt": "created At:",
     "lastUpdate": "last Update:",
-    "localDataBaseError": "An error occurred with the local database. Please try again later."
+    "localDataBaseError": "An error occurred with the local database. Please try again later.",
+    "must choose folder": "must choose folder",
+    "there is no folders": "There are no folders currently.\nYou need to create at least one folder before adding notes.",
+    "there is no notes": "There are no notes.",
+    "add note": "add note",
+    "add folder": "add folder",
+    "Enter category name": "Enter category name",
+    "there is no notes in this folder": "there is no notes in this folder"
+
   }
   

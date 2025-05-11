@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:notes_app/core/services/dependency_injection.dart';
-import 'package:notes_app/core/theme/theme_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/favorite_notes_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/get_all_notes.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_category_controller.dart';
@@ -12,8 +11,6 @@ import 'package:notes_app/featuers/splash_screen/presentation/controller/splash_
 class ControllersBindings extends Bindings {
   @override
   void dependencies() {
-      Get.put(ThemeController()); 
-
     Get.lazyPut<GetAllNotesController>(() => GetAllNotesController(sl()),
         fenix: true);
     Get.lazyPut<SplashScreenController>(() => SplashScreenController(),

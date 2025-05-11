@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/core/helper_function/get_widget_depending_on_reuest_state.dart';
-import 'package:notes_app/core/widgets/empty_list_widget.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_category_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/add_folder_button.dart';
 import 'package:notes_app/featuers/notes/presentation/view/components/folder_widget.dart';
@@ -37,10 +36,7 @@ class FoldersPage extends StatelessWidget {
                       ),
                       erorrMessage: controller.errorMessage)
                   : Center(
-                      child: EmpetyListWidget(
-                          buttonFunction: () => controller.addCategory(context),
-                          text: "there is no folders".tr,
-                          buttonText: "add folder".tr),
+                      child: Text("there is no folders".tr),
                     );
             },
           )),

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:notes_app/core/utils/enums/request_state_enum.dart';
 import 'package:notes_app/core/erorr/failure.dart';
 import 'package:notes_app/core/theme/text_styles.dart';
+import 'package:notes_app/core/widgets/custom_snake_bar.dart';
 import 'package:notes_app/core/widgets/delete_alert_dialog.dart';
 import 'package:notes_app/featuers/notes/domain/entities/note_category.dart';
 import 'package:notes_app/featuers/notes/domain/repos/base_note_category_repo.dart';
@@ -27,6 +28,7 @@ class NoteCategoryController extends GetxController {
     final result = await baseNoteCategoryRepo.getAllCategories();
     result.fold(
       (Failure failure) {
+        errorSnackBar(message: failure.message);
         errorMessage = failure.message;
         fetchState = RequestStateEnum.failed;
         update();
@@ -95,7 +97,9 @@ class NoteCategoryController extends GetxController {
                 final result = await baseNoteCategoryRepo.updateCategory(
                     categories[index].id, categoryNameController.text);
                 result.fold(
-                  (Failure failure) {},
+                  (Failure failure) {
+                    errorSnackBar(message: failure.message);
+                  },
                   (_) {
                     categoryNameController.clear();
 
@@ -112,10 +116,11 @@ class NoteCategoryController extends GetxController {
 
   void deleteCategory(BuildContext context, {required int categoryId}) {
     showDeleteConfirmationDialog(context, onConfirm: () async {
-      final result =
-          await baseNoteCategoryRepo.deleteCategory(categoryId);
+      final result = await baseNoteCategoryRepo.deleteCategory(categoryId);
       result.fold(
-        (Failure failure) {},
+        (Failure failure) {
+          errorSnackBar(message: failure.message);
+        },
         (_) {
           getAllNotesController.getAllNotes();
           fetchAllCategories();
@@ -132,5 +137,4 @@ class NoteCategoryController extends GetxController {
     super.onInit();
     fetchAllCategories();
   }
- 
 }

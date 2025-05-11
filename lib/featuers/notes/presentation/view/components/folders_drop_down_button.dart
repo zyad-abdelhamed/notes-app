@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:notes_app/core/constants/view_constants.dart';
 import 'package:notes_app/core/theme/app_colors.dart';
 import 'package:notes_app/core/theme/text_styles.dart';
-import 'package:notes_app/core/widgets/empty_list_widget.dart';
 import 'package:notes_app/featuers/notes/domain/entities/note.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_category_controller.dart';
 import 'package:notes_app/featuers/notes/presentation/controller/note_controller.dart';
@@ -63,17 +63,37 @@ GetBuilder<NoteCategoryController> foldersDropDownButton(
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'يرجى اختيار فئة';
+                    return 'must choose folder'.tr;
                   }
                   return null;
                 },
               ),
             )
-          : EmpetyListWidget(
-              text: "there is no folders".tr,
-              buttonText: "add folder".tr,
-              buttonFunction: () =>
-                  Get.find<NoteCategoryController>().addCategory(context),
+          : Container(
+              height: 250,
+              width: 200,
+              decoration: BoxDecoration(
+                  color: Get.isDarkMode ? AppColors.black : AppColors.white,
+                  borderRadius: BorderRadius.circular(35),
+                  boxShadow: ViewConstants.shadow),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(Icons.warning, size: 50),
+                  Text("there is no folders".tr,
+                      style: TextStyles.regular14_150(context),
+                      textAlign: TextAlign.center),
+                  OutlinedButton(
+                      onPressed: () => Get.find<NoteCategoryController>()
+                          .addCategory(context),
+                      child: Text("add folder".tr,
+                          style: TextStyles.semiBold16(context: context)
+                              .copyWith(
+                                  color: Get.isDarkMode
+                                      ? AppColors.darkModePrimaryColor
+                                      : AppColors.lightModePrimaryColor)))
+                ],
+              ),
             );
     },
   );

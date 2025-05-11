@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:notes_app/core/constants/view_constants.dart';
 import 'package:notes_app/core/utils/enums/request_state_enum.dart';
+import 'package:notes_app/core/widgets/custom_snake_bar.dart';
 import 'package:notes_app/featuers/notes/domain/entities/note.dart';
 import 'package:notes_app/featuers/notes/domain/repos/base_note_repo.dart';
 
@@ -36,10 +37,12 @@ class FavoriteNotesController extends GetxController {
     update();
   }
 
-    void toggleFavorite(int value, id, {required int index}) async {
+  void toggleFavorite(int value, id, {required int index}) async {
     final result = await baseNoteRepo.toggleFavorite(value, id);
     result.fold(
-      (l) {},
+      (l) {
+        errorSnackBar(message: l.message);
+      },
       (_) {
         _scaleAnimation(id, index);
       },
@@ -61,7 +64,7 @@ class FavoriteNotesController extends GetxController {
       },
     );
   }
-  
+
   void hideFavoritesPageAppBarActions() {
     visible = false;
     update();

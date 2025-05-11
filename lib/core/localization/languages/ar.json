@@ -17,6 +17,15 @@
     "Delete": "حذف",
     "createdAt": "تاريخ الانشاء:",
     "lastUpdate": "آخر تحديث:",
-    "localDataBaseError": "حدث خطأ في قاعدة البيانات المحلية. يرجى المحاولة لاحقًا."
+    "localDataBaseError": "حدث خطأ في قاعدة البيانات المحلية. يرجى المحاولة لاحقًا.",
+    "must choose folder": "يجب عليك اختيار مجلد",
+    "there is no folders": "لا توجد مجلدات حاليًا.\nيجب عليك إنشاء مجلد واحد على الأقل قبل إضافة الملاحظات.",
+    "there is no notes": "لا توجد ملاحظات.",
+    "add note": "اضاقة ملاحظه",
+    "add folder": "اضافة مجلد",
+    "Enter category name": "ادخل اسم المجلد",
+    "there is no notes in this folder": "لا يوجد ملاحظات في هذا المجلد"
+
+
   }
   
